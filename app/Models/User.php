@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens as SanctumHasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use SanctumHasApiTokens;
+
     public $table = 'users';
 
     public $fillable = [
         'name',
         'email',
+        'password',
         'number',
         'identity',
         'country'
@@ -20,16 +24,13 @@ class User extends Model
         'name' => 'string',
         'email' => 'string',
         'number' => 'string',
-        'identity' => 'integer',
-        'country' => 'integer'
     ];
 
     public static array $rules = [
         'name' => 'required',
         'email' => 'required',
+        'password' => 'required',
         'number' => 'required',
-        'identity' => 'required',
-        'country' => 'required'
     ];
 
     

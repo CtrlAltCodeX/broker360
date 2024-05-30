@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\UserAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
-        ->except(['create', 'edit']);
+    Route::get('user', function () {
+        return auth()->user();
+    });
 });
+
+Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::post('login', [UserAPIController::class, 'login']);
