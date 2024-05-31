@@ -19,12 +19,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function () {
         return auth()->user();
     });
-    
+
     Route::resource('contacts', App\Http\Controllers\API\ContactAPIController::class)
         ->except(['create', 'edit']);
+        
+    Route::resource('mails', App\Http\Controllers\API\MailAPIController::class)
+        ->except(['create', 'edit']);
 });
+
 
 Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
     ->except(['create', 'edit']);
 
 Route::post('login', [UserAPIController::class, 'login']);
+
+Route::post('forget-password', [UserAPIController::class, 'forgetPassword']);
+
+Route::post('reset-password', [UserAPIController::class, 'resetPassword']);

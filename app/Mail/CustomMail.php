@@ -9,15 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OtpMail extends Mailable
+class CustomMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $message = "";
 
     /**
      * Create a new message instance.
      */
-    public function __construct(protected $otp)
+    public function __construct(protected $data)
     {
+        $this->message = ( string ) $this->data['message'];
     }
 
     /**
@@ -26,17 +29,15 @@ class OtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Here is your OTP',
+            subject: $this->data['subject'],
         );
     }
 
     /**
-     * OTP
-     *
-     * @return void
+     * Get the message content definition.
      */
     public function build()
     {
-        return $this->view('emails.otp')->with('otp', $this->otp);
+        return $this->view('emails.custom')->with('data', $this->message);
     }
 }

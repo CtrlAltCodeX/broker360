@@ -131,8 +131,74 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * Update the specified User in storage.
-     * PUT/PATCH /users/{id}
+     * @OA\Put(
+     *     path="/users/{id}",
+     *     summary="Update the specified User in storage.",
+     *     operationId="updateUser",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the user to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             ref="#/components/schemas/UpdateUserAPIRequest"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Schema(
+     *                 type="object",
+     *                 example={"success":true, "data":{"id":1, "name":"Updated User", "email":"user@example.com"}, "message":"User updated successfully"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found",
+     *         @OA\JsonContent(
+     *             @OA\Schema(
+     *                 type="object",
+     *                 example={"success":false, "message":"User not found"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             @OA\Schema(
+     *                 type="object",
+     *                 example={"success":false, "message":"Bad request"}
+     *             )
+     *         )
+     *     )
+     * )
+     * 
+     * /**
+     * @OA\Schema(
+     *     schema="UpdateUserAPIRequest",
+     *     type="object",
+     *     required={"name", "email"},
+     *     @OA\Property(
+     *         property="name",
+     *         type="string",
+     *         example="Updated User"
+     *     ),
+     *     @OA\Property(
+     *         property="email",
+     *         type="string",
+     *         example="user@example.com"
+     *     ),
+     * )
      */
     public function update($id, UpdateUserAPIRequest $request): JsonResponse
     {
@@ -167,7 +233,7 @@ class UserAPIController extends AppBaseController
 
         $user->delete();
 
-        return $this->sendSuccess('User deleted successfully');
+        return $this->sendResponse('User deleted successfully');
     }
 
     /**
@@ -350,5 +416,75 @@ class UserAPIController extends AppBaseController
 
         // Returning the result
         return $result;
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/current/user",
+     *     summary="Get Current User",
+     *     description="Returns the current authenticated user",
+     *     tags={"Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Current User",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="user", type="object",
+     *                      @OA\Property(
+     *                          property="id",
+     *                          type="integer",
+     *                          example=1
+     *                      ),
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string",
+     *                          example="John Doe"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string",
+     *                          example="johndoe@example.com"
+     *                      )
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Current User"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Please Login!!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=false
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Please Login!!"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function currentUser()
+    {
+        if (!auth()->check()) return $this->sendError('Please Login!!');
+
+        return $this->sendResponse('Current User', auth()->user());
     }
 }

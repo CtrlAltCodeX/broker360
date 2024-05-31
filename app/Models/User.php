@@ -17,7 +17,8 @@ class User extends Authenticatable
         'password',
         'number',
         'identity',
-        'country'
+        'country',
+        'otp'
     ];
 
     protected $casts = [
