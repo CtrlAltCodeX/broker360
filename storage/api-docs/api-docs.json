@@ -9,6 +9,371 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/contacts": {
+            "get": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Get list of contacts",
+                "description": "Returns list of contacts",
+                "operationId": "getContactsList",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Number of records to skip",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of records to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Contact"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/contacts": {
+            "post": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Store a newly created Contact in storage",
+                "operationId": "d01f7866c71a36e65b23f0be79595060",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "position": {
+                                        "type": "string",
+                                        "example": "Manager"
+                                    },
+                                    "company": {
+                                        "type": "string",
+                                        "example": "Company Inc."
+                                    },
+                                    "fountain": {
+                                        "type": "string",
+                                        "example": "Source"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "+1234567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "twitter": {
+                                        "type": "string",
+                                        "example": "@johndoe"
+                                    },
+                                    "linkedin": {
+                                        "type": "string",
+                                        "example": "linkedin.com/in/johndoe"
+                                    },
+                                    "skype": {
+                                        "type": "string",
+                                        "example": "johndoe_skype"
+                                    },
+                                    "website": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://www.example.com"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Main St, Anytown, USA"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Description of the contact"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contact saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                },
+                                                "position": {
+                                                    "type": "string",
+                                                    "example": "Manager"
+                                                },
+                                                "company": {
+                                                    "type": "string",
+                                                    "example": "Company Inc."
+                                                },
+                                                "fountain": {
+                                                    "type": "string",
+                                                    "example": "Source"
+                                                },
+                                                "number": {
+                                                    "type": "string",
+                                                    "example": "+1234567890"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "john.doe@example.com"
+                                                },
+                                                "twitter": {
+                                                    "type": "string",
+                                                    "example": "@johndoe"
+                                                },
+                                                "linkedin": {
+                                                    "type": "string",
+                                                    "example": "linkedin.com/in/johndoe"
+                                                },
+                                                "skype": {
+                                                    "type": "string",
+                                                    "example": "johndoe_skype"
+                                                },
+                                                "website": {
+                                                    "type": "string",
+                                                    "format": "url",
+                                                    "example": "https://www.example.com"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "123 Main St, Anytown, USA"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Description of the contact"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact saved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contacts/{id}": {
+            "put": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Update an existing contact",
+                "description": "Updates a contact by ID",
+                "operationId": "updateContact",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of contact to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateContactRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Contact"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Delete an existing contact",
+                "description": "Deletes a contact by ID",
+                "operationId": "deleteContact",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of contact to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Contact not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/users": {
             "post": {
                 "tags": [
@@ -38,13 +403,17 @@
                                         "type": "string",
                                         "example": "987654321"
                                     },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "admin123"
+                                    },
                                     "country": {
-                                        "type": "integer",
-                                        "example": 12
+                                        "type": "string",
+                                        "example": "I want to real estate company"
                                     },
                                     "identity": {
-                                        "type": "integer",
-                                        "example": 12
+                                        "type": "string",
+                                        "example": "Argentina"
                                     }
                                 },
                                 "type": "object"
@@ -83,13 +452,17 @@
                                                             "type": "string",
                                                             "example": "user@example.com"
                                                         },
+                                                        "password": {
+                                                            "type": "string",
+                                                            "example": "admin123"
+                                                        },
                                                         "country": {
-                                                            "type": "integer",
-                                                            "example": 12
+                                                            "type": "string",
+                                                            "example": "I want to real estate company"
                                                         },
                                                         "identity": {
-                                                            "type": "integer",
-                                                            "example": 12
+                                                            "type": "string",
+                                                            "example": "Argentina"
                                                         }
                                                     },
                                                     "type": "object"
@@ -128,6 +501,374 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "6d196eb99f855a1b46f47f5ed8ba40ce",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "JWT token"
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "user@example.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User login successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid email or password"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/forget-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Send OTP to email for password reset",
+                "operationId": "54fdb4f58f53c4fb6653c1cb80ed0ed8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OTP sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OTP sent successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email does not exist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reset-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Reset password using OTP",
+                "operationId": "717f2ce41afc56409f4434e0ba098298",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "otp": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password successfully changed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password successfully changed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email does not exist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Contact": {
+                "title": "Contact",
+                "required": [
+                    "name",
+                    "last_name"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "First name of the contact",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "Last name of the contact",
+                        "type": "string"
+                    },
+                    "position": {
+                        "description": "Position of the contact in the company",
+                        "type": "string"
+                    },
+                    "company": {
+                        "description": "Company name",
+                        "type": "string"
+                    },
+                    "fountain": {
+                        "description": "Fountain details",
+                        "type": "string"
+                    },
+                    "number": {
+                        "description": "Contact number",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address",
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "description": "Twitter handle",
+                        "type": "string"
+                    },
+                    "linkedin": {
+                        "description": "LinkedIn profile",
+                        "type": "string"
+                    },
+                    "skype": {
+                        "description": "Skype ID",
+                        "type": "string"
+                    },
+                    "website": {
+                        "description": "Website URL",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Contact address",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description or notes about the contact",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateContactRequest": {
+                "properties": {
+                    "name": {
+                        "description": "First name of the contact",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "Last name of the contact",
+                        "type": "string"
+                    },
+                    "position": {
+                        "description": "Position of the contact in the company",
+                        "type": "string"
+                    },
+                    "company": {
+                        "description": "Company name",
+                        "type": "string"
+                    },
+                    "fountain": {
+                        "description": "Fountain details",
+                        "type": "string"
+                    },
+                    "number": {
+                        "description": "Contact number",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address",
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "description": "Twitter handle",
+                        "type": "string"
+                    },
+                    "linkedin": {
+                        "description": "LinkedIn profile",
+                        "type": "string"
+                    },
+                    "skype": {
+                        "description": "Skype ID",
+                        "type": "string"
+                    },
+                    "website": {
+                        "description": "Website URL",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Contact address",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description or notes about the contact",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             }
         }
     }

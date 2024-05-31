@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function () {
         return auth()->user();
     });
+    
+    Route::resource('contacts', App\Http\Controllers\API\ContactAPIController::class)
+        ->except(['create', 'edit']);
 });
 
 Route::resource('users', App\Http\Controllers\API\UserAPIController::class)

@@ -9,8 +9,10 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Mail\OtpMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class UserAPIController
@@ -218,10 +220,135 @@ class UserAPIController extends AppBaseController
             return $this->sendError('Unauthorized');
 
         $user = Auth::user();
-        
+
         $success['token'] = $user->createToken('test')->plainTextToken;
         $success['user'] = $user;
 
         return $this->sendResponse('User Login Successfully', $success);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/forget-password",
+     *     summary="Send OTP to email for password reset",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP sent successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="OTP sent successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Email does not exist")
+     *         )
+     *     )
+     * )
+     */
+    public function forgetPassword()
+    {
+        request()->validate([
+            'email' => 'required'
+        ]);
+
+        $user = User::where('email', request()->email)->first();
+
+        if (!$user)
+            return $this->sendError('Email Does not exist');
+
+        $otp = $this->generateOTP(4);
+
+        Mail::to(request()->email)->send(new OtpMail($otp));
+
+        $user->update(['otp' => $otp]);
+
+        return $this->sendResponse('OTP send Successfully');
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/reset-password",
+     *     summary="Reset password using OTP",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="otp", type="string", example="1234"),
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="newpassword123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password successfully changed",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Password successfully changed")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Email does not exist")
+     *         )
+     *     )
+     * )
+     */
+    public function resetPassword()
+    {
+        request()->validate([
+            'otp' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email', request()->email)
+            ->first();
+
+        if (!$user)
+            return $this->sendError('Email Does not exist');
+
+        $userWithOTP = User::where('email', request()->email)
+            // ->where('status', 1)
+            ->where('otp', request()->otp)
+            ->first();
+
+        if (!$userWithOTP)
+            return $this->sendError('Invalid OTP');
+
+        $userWithOTP->update(['password' => Hash::make(request()->password)]);
+
+        return $this->sendResponse('Password Successfully changed');
+    }
+
+    /**
+     * Generate Random Digits
+     *
+     * @return int
+     */
+    public function generateOTP($n)
+    {
+        $generator = "1357902468";
+        $result = "";
+
+        for ($i = 1; $i <= $n; $i++) {
+            $result .= substr($generator, rand() % strlen($generator), 1);
+        }
+
+        // Returning the result
+        return $result;
     }
 }
