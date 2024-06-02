@@ -36,7 +36,7 @@ class MailAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($mails->toArray(), 'Mails retrieved successfully');
+        return $this->sendResponse('Mails retrieved successfully', $mails->toArray());
     }
 
     /**
@@ -87,7 +87,7 @@ class MailAPIController extends AppBaseController
 
         $mail = $this->mailRepository->create($input);
 
-        return $this->sendResponse($mail->toArray(), 'Mail saved successfully');
+        return $this->sendResponse('Mail saved successfully', $mail->toArray());
     }
 
     /**
@@ -103,7 +103,7 @@ class MailAPIController extends AppBaseController
             return $this->sendError('Mail not found');
         }
 
-        return $this->sendResponse($mail->toArray(), 'Mail retrieved successfully');
+        return $this->sendResponse('Mail retrieved successfully', $mail->toArray());
     }
 
     /**
@@ -123,7 +123,7 @@ class MailAPIController extends AppBaseController
 
         $mail = $this->mailRepository->update($input, $id);
 
-        return $this->sendResponse($mail->toArray(), 'Mail updated successfully');
+        return $this->sendResponse('Mail updated successfully', $mail->toArray());
     }
 
     /**

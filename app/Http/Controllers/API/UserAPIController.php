@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\CreateUserAPIRequest;
-use App\Http\Requests\API\UpdateUserAPIRequest;
-use App\Models\User;
-use App\Repositories\UserRepository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use App\Mail\OtpMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\JsonResponse;
+use App\Models\User;
+use App\Mail\OtpMail;
+use App\Http\Requests\API\CreateUserAPIRequest;
+use App\Http\Requests\API\UpdateUserAPIRequest;
+use App\Repositories\UserRepository;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AppBaseController;
 
 /**
  * Class UserAPIController
@@ -38,7 +38,7 @@ class UserAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($users->toArray(), 'Users retrieved successfully');
+        return $this->sendResponse('Users retrieved successfully', $users->toArray());
     }
 
     /**
@@ -111,7 +111,7 @@ class UserAPIController extends AppBaseController
 
         $user = $this->userRepository->create($input);
 
-        return $this->sendResponse($user->toArray(), 'User saved successfully');
+        return $this->sendResponse('User saved successfully', $user->toArray());
     }
 
     /**
@@ -127,7 +127,7 @@ class UserAPIController extends AppBaseController
             return $this->sendError('User not found');
         }
 
-        return $this->sendResponse($user->toArray(), 'User retrieved successfully');
+        return $this->sendResponse('User retrieved successfully', $user->toArray());
     }
 
     /**
@@ -213,7 +213,7 @@ class UserAPIController extends AppBaseController
 
         $user = $this->userRepository->update($input, $id);
 
-        return $this->sendResponse($user->toArray(), 'User updated successfully');
+        return $this->sendResponse('User updated successfully', $user->toArray());
     }
 
     /**

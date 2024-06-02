@@ -22,9 +22,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('contacts', App\Http\Controllers\API\ContactAPIController::class)
         ->except(['create', 'edit']);
-        
-    Route::resource('mails', App\Http\Controllers\API\MailAPIController::class)
-        ->except(['create', 'edit']);
 });
 
 

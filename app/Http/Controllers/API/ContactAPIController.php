@@ -24,7 +24,7 @@ class ContactAPIController extends AppBaseController
 
     /**
      * @OA\Get(
-     *     path="/contacts",
+     *     path="/api/contacts",
      *     operationId="getContactsList",
      *     tags={"Contacts"},
      *     summary="Get list of contacts",
@@ -69,7 +69,7 @@ class ContactAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($contacts->toArray(), 'Contacts retrieved successfully');
+        return $this->sendResponse('Contacts retrieved successfully', $contacts->toArray());
     }
 
     /**
@@ -148,7 +148,7 @@ class ContactAPIController extends AppBaseController
 
         $contact = $this->contactRepository->create($input);
 
-        return $this->sendResponse($contact->toArray(), 'Contact saved successfully');
+        return $this->sendResponse('Contact saved successfully', $contact->toArray());
     }
 
 
@@ -165,7 +165,7 @@ class ContactAPIController extends AppBaseController
             return $this->sendError('Contact not found');
         }
 
-        return $this->sendResponse($contact->toArray(), 'Contact retrieved successfully');
+        return $this->sendResponse('Contact retrieved successfully', $contact->toArray());
     }
 
     /**
@@ -357,7 +357,7 @@ class ContactAPIController extends AppBaseController
 
         $contact = $this->contactRepository->update($input, $id);
 
-        return $this->sendResponse($contact->toArray(), 'Contact updated successfully');
+        return $this->sendResponse('Contact updated successfully', $contact->toArray());
     }
 
     /**
