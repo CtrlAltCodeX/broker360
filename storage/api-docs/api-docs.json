@@ -565,13 +565,13 @@
                 }
             }
         },
-        "/properties": {
+        "/api/properties": {
             "get": {
                 "tags": [
                     "Properties"
                 ],
                 "summary": "Display a listing of the Properties",
-                "operationId": "37613222860186b0e3fd7c1e65a5696a",
+                "operationId": "11abae22bcd6e3c7ffb95f6f860d73e9",
                 "parameters": [
                     {
                         "name": "skip",
@@ -619,7 +619,7 @@
                     "Properties"
                 ],
                 "summary": "Store a newly created Property in storage",
-                "operationId": "33f0bd4faf91d2edd6ce485ce76e6439",
+                "operationId": "3605c634328149727ebf75550696f387",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -700,6 +700,34 @@
                                     "user_id": {
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "street": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "corner_with": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "postal_code": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "property_features": {
+                                        "type": "integer",
+                                        "example": "Features"
+                                    },
+                                    "share_commission": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "commission_percent": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "condition_sharing": {
+                                        "type": "integer",
+                                        "example": "Sharing"
                                     }
                                 },
                                 "type": "object"
@@ -794,6 +822,34 @@
                                                     "type": "integer",
                                                     "example": "1"
                                                 },
+                                                "street": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "corner_with": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "postal_code": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "property_features": {
+                                                    "type": "integer",
+                                                    "example": "Features"
+                                                },
+                                                "share_commission": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "commission_percent": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "condition_sharing": {
+                                                    "type": "integer",
+                                                    "example": "Sharing"
+                                                },
                                                 "created_at": {
                                                     "type": "string",
                                                     "format": "date-time",
@@ -860,7 +916,323 @@
                 }
             }
         },
-        "/property-boards": {
+        "/properties/{id}": {
+            "put": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Update the specified Property in storage",
+                "operationId": "0106cabf9f2482c98e17b0779d642432",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Property to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "ad_type",
+                                    "ad_desc",
+                                    "operation_type",
+                                    "show_price_ad",
+                                    "bedroom",
+                                    "bathrooms",
+                                    "half_bath",
+                                    "parking_lots",
+                                    "construction",
+                                    "year_construction",
+                                    "number_plants",
+                                    "number_floors",
+                                    "monthly_maintence",
+                                    "internal_key",
+                                    "key_code",
+                                    "user_id",
+                                    "street",
+                                    "corner_with",
+                                    "postal_code",
+                                    "property_features",
+                                    "share_commission",
+                                    "commission_percent",
+                                    "condition_sharing"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "House"
+                                    },
+                                    "ad_type": {
+                                        "type": "string",
+                                        "example": "Sale"
+                                    },
+                                    "ad_desc": {
+                                        "type": "string",
+                                        "example": "A beautiful house"
+                                    },
+                                    "operation_type": {
+                                        "type": "string",
+                                        "example": "Rent"
+                                    },
+                                    "show_price_ad": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "bedroom": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "bathrooms": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "half_bath": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "parking_lots": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "construction": {
+                                        "type": "string",
+                                        "example": "Brick"
+                                    },
+                                    "year_construction": {
+                                        "type": "integer",
+                                        "example": 2020
+                                    },
+                                    "number_plants": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "number_floors": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "monthly_maintence": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.75
+                                    },
+                                    "internal_key": {
+                                        "type": "string",
+                                        "example": "INT123"
+                                    },
+                                    "key_code": {
+                                        "type": "string",
+                                        "example": "KC456"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "Main St"
+                                    },
+                                    "corner_with": {
+                                        "type": "string",
+                                        "example": "1st Ave"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "property_features": {
+                                        "type": "string",
+                                        "example": "Features"
+                                    },
+                                    "share_commission": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "commission_percent": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5.5
+                                    },
+                                    "condition_sharing": {
+                                        "type": "string",
+                                        "example": "Sharing conditions"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Property updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Property"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Property not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid input"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/properties/images": {
+            "post": {
+                "tags": [
+                    "Property Images"
+                ],
+                "summary": "Store property images",
+                "description": "Uploads and stores property images.",
+                "operationId": "8b34cb671ea48a841c86103dfc40ca9c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "property_image",
+                                    "property_id"
+                                ],
+                                "properties": {
+                                    "property_image": {
+                                        "description": "Array of property images to upload",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "property_id": {
+                                        "description": "ID of the property",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Property images inserted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "/storage/property_image/1623847527.jpg"
+                                                    },
+                                                    "property_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property images inserted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/property-boards": {
             "get": {
                 "tags": [
                     "PropertyBoards"
@@ -909,9 +1281,7 @@
                         "description": "Resource not found"
                     }
                 }
-            }
-        },
-        "/api/property-boards": {
+            },
             "post": {
                 "tags": [
                     "PropertyBoards"
@@ -1693,6 +2063,34 @@
                     "user_id": {
                         "description": "User ID",
                         "type": "integer"
+                    },
+                    "street": {
+                        "description": "Street",
+                        "type": "string"
+                    },
+                    "corner_with": {
+                        "description": "Cornor ",
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "description": "Postal Code",
+                        "type": "integer"
+                    },
+                    "property_features": {
+                        "description": "property_features",
+                        "type": "string"
+                    },
+                    "share_commission": {
+                        "description": "share_commission",
+                        "type": "integer"
+                    },
+                    "commission_percent": {
+                        "description": "commission_percent",
+                        "type": "integer"
+                    },
+                    "condition_sharing": {
+                        "description": "condition_sharing",
+                        "type": "string"
                     }
                 },
                 "type": "object"

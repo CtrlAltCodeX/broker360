@@ -25,6 +25,13 @@ class Property extends Model
         'monthly_maintence',
         'internal_key',
         'key_code',
+        'street',
+        'corner_with',
+        'postal_code',
+        'property_features',
+        'share_commission',
+        'commission_percent',
+        'condition_sharing',
     ];
 
     protected $casts = [

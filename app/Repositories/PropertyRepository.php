@@ -25,6 +25,14 @@ class PropertyRepository extends EloquentBaseRepository
         'monthly_maintence',
         'internal_key',
         'key_code',
+        'user_id',
+        'street',
+        'corner_with',
+        'postal_code',
+        'property_features',
+        'share_commission',
+        'commission_percent',
+        'condition_sharing',
     ];
 
     public function getFieldsSearchable(): array

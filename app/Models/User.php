@@ -35,7 +35,6 @@ class User extends Authenticatable
     public static array $rules = [
         'name' => 'required',
         'email' => 'required',
-        'password' => 'required',
         'number' => 'required',
     ];
 

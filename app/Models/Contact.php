@@ -43,8 +43,8 @@ class Contact extends Model
     public static array $rules = [
         'name' => 'required',
         'number' => 'required',
-        'email' => 'requried',
-        'twitter' => 'linkedin string text'
+        'email' => 'required',
+        'twitter' => 'required'
     ];
 
     
