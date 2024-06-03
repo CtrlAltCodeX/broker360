@@ -24,7 +24,48 @@ class PropertyBoardsAPIController extends AppBaseController
 
     /**
      * Display a listing of the PropertyBoards.
-     * GET|HEAD /property-boards
+     *
+     * @OA\Get(
+     *     path="/api/property-boards",
+     *     operationId="getPropertyBoardsList",
+     *     tags={"PropertyBoards"},
+     *     summary="Get list of property boards",
+     *     description="Returns list of property boards",
+     *     @OA\Parameter(
+     *         name="skip",
+     *         in="query",
+     *         description="Number of records to skip",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Number of records to return",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PropertyBoard")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Resource not found"
+     *     )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -91,6 +132,10 @@ class PropertyBoardsAPIController extends AppBaseController
      *         property="name",
      *         type="string"
      *     ),
+     *     @OA\Property(
+     *         property="user_id",
+     *         type="integer"
+     *     ),
      * )
 
      * @OA\Schema(
@@ -104,6 +149,10 @@ class PropertyBoardsAPIController extends AppBaseController
      *     @OA\Property(
      *         property="name",
      *         type="string"
+     *     ),
+     *     @OA\Property(
+     *         property="user_id",
+     *         type="integer"
      *     ),
      * )
 

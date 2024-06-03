@@ -18,7 +18,12 @@ class User extends Authenticatable
         'number',
         'identity',
         'country',
-        'otp'
+        'otp',
+        'agency_name',
+        'lang',
+        'emails',
+        'timezone',
+        'profile_url',
     ];
 
     protected $casts = [

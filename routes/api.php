@@ -33,3 +33,7 @@ Route::post('login', [UserAPIController::class, 'login']);
 Route::post('forget-password', [UserAPIController::class, 'forgetPassword']);
 
 Route::post('reset-password', [UserAPIController::class, 'resetPassword']);
+
+
+Route::resource('properties', App\Http\Controllers\API\PropertyAPIController::class)
+    ->except(['create', 'edit']);

@@ -13,6 +13,7 @@ use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Class UserAPIController
@@ -132,7 +133,7 @@ class UserAPIController extends AppBaseController
 
     /**
      * @OA\Put(
-     *     path="/users/{id}",
+     *     path="/api/users/{id}",
      *     summary="Update the specified User in storage.",
      *     operationId="updateUser",
      *     tags={"Users"},
@@ -198,6 +199,31 @@ class UserAPIController extends AppBaseController
      *         type="string",
      *         example="user@example.com"
      *     ),
+     *     @OA\Property(
+     *         property="number",
+     *         type="integer",
+     *         example="987456321"
+     *     ),
+     *     @OA\Property(
+     *         property="agency_name",
+     *         type="string",
+     *         example="Example Agency"
+     *     ),
+     *     @OA\Property(
+     *         property="lang",
+     *         type="string",
+     *         example="English"
+     *     ),
+     *     @OA\Property(
+     *         property="timezone",
+     *         type="string",
+     *         example="Timezone"
+     *     ),
+     *     @OA\Property(
+     *         property="profile_url",
+     *         type="object",
+     *         example="{}"
+     *     ),
      * )
      */
     public function update($id, UpdateUserAPIRequest $request): JsonResponse
@@ -209,6 +235,16 @@ class UserAPIController extends AppBaseController
 
         if (empty($user)) {
             return $this->sendError('User not found');
+        }
+
+        if ($file = $request->file('profile_url')) {
+            if ($file instanceof UploadedFile) {
+                $profileImage = time() . "." . $file->getClientOriginalExtension();
+
+                $file->move('storage/profile/', $profileImage);
+
+                $input['profile_url'] = "/storage/profile/" . "$profileImage";
+            }
         }
 
         $user = $this->userRepository->update($input, $id);
@@ -438,21 +474,41 @@ class UserAPIController extends AppBaseController
      *                 property="data",
      *                 type="object",
      *                 @OA\Property(property="user", type="object",
-     *                      @OA\Property(
-     *                          property="id",
-     *                          type="integer",
-     *                          example=1
-     *                      ),
-     *                      @OA\Property(
-     *                          property="name",
-     *                          type="string",
-     *                          example="John Doe"
-     *                      ),
-     *                      @OA\Property(
-     *                          property="email",
-     *                          type="string",
-     *                          example="johndoe@example.com"
-     *                      )
+     *     @OA\Property(
+     *         property="name",
+     *         type="string",
+     *         example="Updated User"
+     *     ),
+     *     @OA\Property(
+     *         property="email",
+     *         type="string",
+     *         example="user@example.com"
+     *     ),
+     *     @OA\Property(
+     *         property="number",
+     *         type="integer",
+     *         example="987456321"
+     *     ),
+     *     @OA\Property(
+     *         property="agency_name",
+     *         type="string",
+     *         example="Example Agency"
+     *     ),
+     *     @OA\Property(
+     *         property="lang",
+     *         type="string",
+     *         example="English"
+     *     ),
+     *     @OA\Property(
+     *         property="timezone",
+     *         type="string",
+     *         example="Timezone"
+     *     ),
+     *     @OA\Property(
+     *         property="profile_url",
+     *         type="object",
+     *         example="{}"
+     *     ),
      *                 )
      *             ),
      *             @OA\Property(

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('property_boards', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

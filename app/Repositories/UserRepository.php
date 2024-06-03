@@ -14,7 +14,13 @@ class UserRepository extends EloquentBaseRepository
         'password',
         'number',
         'identity',
-        'country'
+        'country',
+        'otp',
+        'agency_name',
+        'lang',
+        'emails',
+        'timezone',
+        'profile_url',
     ];
 
     public function getFieldsSearchable(): array

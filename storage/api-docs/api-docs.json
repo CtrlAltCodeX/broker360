@@ -565,6 +565,352 @@
                 }
             }
         },
+        "/properties": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Display a listing of the Properties",
+                "operationId": "37613222860186b0e3fd7c1e65a5696a",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Number of records to skip",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of records to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Properties retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Property"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Store a newly created Property in storage",
+                "operationId": "33f0bd4faf91d2edd6ce485ce76e6439",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "ad_type",
+                                    "operation_type"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "residential"
+                                    },
+                                    "ad_type": {
+                                        "type": "string",
+                                        "example": "sale"
+                                    },
+                                    "ad_desc": {
+                                        "type": "string",
+                                        "example": "Beautiful house with garden"
+                                    },
+                                    "operation_type": {
+                                        "type": "string",
+                                        "example": "rent"
+                                    },
+                                    "show_price_ad": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "bedroom": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "bathrooms": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "half_bath": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "parking_lots": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "construction": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 120.5
+                                    },
+                                    "year_construction": {
+                                        "type": "integer",
+                                        "example": 2015
+                                    },
+                                    "number_plants": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "number_floors": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "monthly_maintence": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.75
+                                    },
+                                    "internal_key": {
+                                        "type": "string",
+                                        "example": "INT123"
+                                    },
+                                    "key_code": {
+                                        "type": "string",
+                                        "example": "KEY456"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Property saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "residential"
+                                                },
+                                                "ad_type": {
+                                                    "type": "string",
+                                                    "example": "sale"
+                                                },
+                                                "ad_desc": {
+                                                    "type": "string",
+                                                    "example": "Beautiful house with garden"
+                                                },
+                                                "operation_type": {
+                                                    "type": "string",
+                                                    "example": "rent"
+                                                },
+                                                "show_price_ad": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "bedroom": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "bathrooms": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "half_bath": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "parking_lots": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "construction": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 120.5
+                                                },
+                                                "year_construction": {
+                                                    "type": "integer",
+                                                    "example": 2015
+                                                },
+                                                "number_plants": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "number_floors": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "monthly_maintence": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 150.75
+                                                },
+                                                "internal_key": {
+                                                    "type": "string",
+                                                    "example": "INT123"
+                                                },
+                                                "key_code": {
+                                                    "type": "string",
+                                                    "example": "KEY456"
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-21T13:45:00Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-21T13:45:00Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property saved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/property-boards": {
+            "get": {
+                "tags": [
+                    "PropertyBoards"
+                ],
+                "summary": "Get list of property boards",
+                "description": "Returns list of property boards",
+                "operationId": "getPropertyBoardsList",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Number of records to skip",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of records to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PropertyBoard"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                }
+            }
+        },
         "/api/property-boards": {
             "post": {
                 "tags": [
@@ -757,7 +1103,7 @@
                 }
             }
         },
-        "/users/{id}": {
+        "/api/users/{id}": {
             "put": {
                 "tags": [
                     "Users"
@@ -1081,17 +1427,33 @@
                                             "properties": {
                                                 "user": {
                                                     "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
                                                         "name": {
                                                             "type": "string",
-                                                            "example": "John Doe"
+                                                            "example": "Updated User"
                                                         },
                                                         "email": {
                                                             "type": "string",
-                                                            "example": "johndoe@example.com"
+                                                            "example": "user@example.com"
+                                                        },
+                                                        "number": {
+                                                            "type": "integer",
+                                                            "example": "987456321"
+                                                        },
+                                                        "agency_name": {
+                                                            "type": "string",
+                                                            "example": "Example Agency"
+                                                        },
+                                                        "lang": {
+                                                            "type": "string",
+                                                            "example": "English"
+                                                        },
+                                                        "timezone": {
+                                                            "type": "string",
+                                                            "example": "Timezone"
+                                                        },
+                                                        "profile_url": {
+                                                            "type": "object",
+                                                            "example": "{}"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1254,6 +1616,87 @@
                 },
                 "type": "object"
             },
+            "Property": {
+                "title": "Property",
+                "required": [
+                    "type",
+                    "ad_type",
+                    "ad_desc",
+                    "operation_type"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "The type of the property",
+                        "type": "string"
+                    },
+                    "ad_type": {
+                        "description": "The type of ad",
+                        "type": "string"
+                    },
+                    "ad_desc": {
+                        "description": "The description of the ad",
+                        "type": "string"
+                    },
+                    "operation_type": {
+                        "description": "The type of operation",
+                        "type": "string"
+                    },
+                    "show_price_ad": {
+                        "description": "Whether to show the price in the ad",
+                        "type": "boolean"
+                    },
+                    "bedroom": {
+                        "description": "The number of bedrooms",
+                        "type": "integer"
+                    },
+                    "bathrooms": {
+                        "description": "The number of bathrooms",
+                        "type": "integer"
+                    },
+                    "half_bath": {
+                        "description": "The number of half bathrooms",
+                        "type": "integer"
+                    },
+                    "parking_lots": {
+                        "description": "The number of parking lots",
+                        "type": "integer"
+                    },
+                    "construction": {
+                        "description": "The construction size",
+                        "type": "integer"
+                    },
+                    "year_construction": {
+                        "description": "The year of construction",
+                        "type": "integer"
+                    },
+                    "number_plants": {
+                        "description": "The number of plants",
+                        "type": "integer"
+                    },
+                    "number_floors": {
+                        "description": "The number of floors",
+                        "type": "integer"
+                    },
+                    "monthly_maintence": {
+                        "description": "The monthly maintenance cost",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "internal_key": {
+                        "description": "The internal key",
+                        "type": "string"
+                    },
+                    "key_code": {
+                        "description": "The key code",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "description": "User ID",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "CreatePropertyBoardsAPIRequest": {
                 "required": [
                     "property_name",
@@ -1262,6 +1705,9 @@
                 "properties": {
                     "name": {
                         "type": "string"
+                    },
+                    "user_id": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -1274,6 +1720,9 @@
                     },
                     "name": {
                         "type": "string"
+                    },
+                    "user_id": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -1291,6 +1740,26 @@
                     "email": {
                         "type": "string",
                         "example": "user@example.com"
+                    },
+                    "number": {
+                        "type": "integer",
+                        "example": "987456321"
+                    },
+                    "agency_name": {
+                        "type": "string",
+                        "example": "Example Agency"
+                    },
+                    "lang": {
+                        "type": "string",
+                        "example": "English"
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "example": "Timezone"
+                    },
+                    "profile_url": {
+                        "type": "object",
+                        "example": "{}"
                     }
                 },
                 "type": "object"
