@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +16,47 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.content');
+});
+
+Route::prefix('users')->group(function () {
+    Route::get('list', [UserController::class, 'index'])
+        ->name('admin.users.index');
+
+    Route::get('create', [UserController::class, 'create'])
+        ->name('admin.users.create');
+
+    Route::post('create', [UserController::class, 'store'])
+        ->name('admin.users.store');
+
+    Route::get('edit/{id}', [UserController::class, 'edit'])
+        ->name('admin.users.edit');
+
+    Route::post('update/{id}', [UserController::class, 'update'])
+        ->name('admin.users.update');
+
+    Route::get('delete/{id}', [UserController::class, 'destroy'])
+        ->name('admin.users.delete');
+});
+
+Route::prefix('contacts')->group(function () {
+    Route::get('list', [ContactsController::class, 'index'])
+        ->name('admin.contacts.index');
+
+    Route::get('create', [ContactsController::class, 'create'])
+        ->name('admin.contacts.create');
+
+    Route::post('create', [ContactsController::class, 'store'])
+        ->name('admin.contacts.store');
+
+    Route::get('edit/{id}', [ContactsController::class, 'edit'])
+        ->name('admin.contacts.edit');
+
+    Route::post('update/{id}', [ContactsController::class, 'update'])
+        ->name('admin.contacts.update');
+
+    Route::get('delete/{id}', [ContactsController::class, 'destroy'])
+        ->name('admin.contacts.delete');
 });
 
 Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder')->name('io_generator_builder');
