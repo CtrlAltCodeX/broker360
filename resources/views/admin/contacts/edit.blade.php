@@ -14,10 +14,10 @@
                         <input type="text" class="form-control" id="exampleInputPassword1" name="last_name" value="{{ $contact->last_name }}">
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Postion</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" name="position" value="{{ $contact->position }}">
+                        <input type="text" class="form-control" id="exampleInputPassword1" name="position" value="{{ $contact->position }}">
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Company</label>
-                        <input type="number" class="form-control" id="exampleInputPassword1" name="company" value="{{ $contact->company }}">
+                        <input type="text" class="form-control" id="exampleInputPassword1" name="company" value="{{ $contact->company }}">
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Fouuntain</label>
                         <input type="text" class="form-control" id="exampleInputPassword1" name="fountain" value="{{ $contact->fountain }}">

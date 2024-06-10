@@ -199,7 +199,7 @@ class PropertyAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $properties = $this->propertyRepository->all(
+        $properties = $this->propertyRepository->with('images')->all(
             ['*'],
             $request->get('skip'),
             $request->get('limit')

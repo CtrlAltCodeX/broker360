@@ -105,17 +105,29 @@ class UserController extends AppBaseController
     {
         $user = $this->userRepository->find($id);
 
+        $input = $request->all();
+
         if (empty($user)) {
             FlashFlash::error('User not found');
 
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        if ($file = $request->file('profile')) {
+            if ($file instanceof UploadedFile) {
+                $profileImage = time() . "." . $file->getClientOriginalExtension();
+
+                $file->move('storage/profile/', $profileImage);
+
+                $input['profile_url'] = "/storage/profile/" . "$profileImage";
+            }
+        }
+
+        $user = $this->userRepository->update($input, $id);
 
         FlashFlash::success('User updated successfully.');
 
-        return redirect(route('users.index'));
+        return redirect(route('admin.users.index'));
     }
 
     /**

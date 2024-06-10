@@ -94,13 +94,17 @@ class PropertyController extends AppBaseController
     {
         $user = $this->propertyRepository->find($id);
 
+        $input = $request->all();
+
+        if ($input['show_price_ad'] == 'on') $input['show_price_ad'] = 1;
+
         if (empty($user)) {
             FlashFlash::error('Properties not found');
 
             return redirect(route('admin.properties.index'));
         }
 
-        $user = $this->propertyRepository->update($request->all(), $id);
+        $user = $this->propertyRepository->update($input, $id);
 
         FlashFlash::success('Properties updated successfully.');
 

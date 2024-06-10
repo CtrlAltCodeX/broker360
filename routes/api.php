@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function () {
         return auth()->user();
     });
@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
         ->except(['create', 'edit']);
-});
+// });
 
 Route::post('login', [UserAPIController::class, 'login']);
 

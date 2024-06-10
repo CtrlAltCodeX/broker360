@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center my-3">
         <div class="col-md-6">
-            <form action="{{ route('admin.users.update', $user->id) }}" method="post"> <!--begin::Body-->
+            <form action="{{ route('admin.users.update', $user->id) }}" method="post" enctype="multipart/form-data"> <!--begin::Body-->
             @csrf
                 <div class="card-body">
                     <div class="mb-3"> <label for="exampleInputEmail1" class="form-label">Name</label>
