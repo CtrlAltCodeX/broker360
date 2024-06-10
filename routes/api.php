@@ -29,6 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('properties/images', [PropertyAPIController::class, 'storeImages']);
 
+    Route::post('properties/{id}/images', [PropertyAPIController::class, 'getImages']);
+
+    Route::get('properties/{id}/user', [PropertyAPIController::class, 'getPropertyByUserId']);
+
     Route::resource('property-boards', App\Http\Controllers\API\PropertyBoardsAPIController::class)
         ->except(['create', 'edit']);
 

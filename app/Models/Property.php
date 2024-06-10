@@ -58,4 +58,9 @@ class Property extends Model
         'construction' => 'required',
         'number_plants' => 'required'
     ];
-}
+
+    public function images()
+    {
+        return $this->hasMany(PropertyImage::class);
+    }
+}   

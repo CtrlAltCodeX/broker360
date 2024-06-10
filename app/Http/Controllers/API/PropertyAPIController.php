@@ -308,8 +308,87 @@ class PropertyAPIController extends AppBaseController
     }
 
     /**
-     * Display the specified Property.
-     * GET|HEAD /properties/{id}
+     * @OA\Get(
+     *     path="/api/properties/{id}",
+     *     summary="Display the specified Property",
+     *     description="Get the details of a specific property by its ID.",
+     *     operationId="showProperty",
+     *     tags={"Properties"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the property to retrieve",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Property retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="type", type="string", example="residential"),
+     *                 @OA\Property(property="ad_type", type="string", example="sale"),
+     *                 @OA\Property(property="ad_desc", type="string", example="Beautiful house with garden"),
+     *                 @OA\Property(property="operation_type", type="string", example="rent"),
+     *                 @OA\Property(property="show_price_ad", type="boolean", example=true),
+     *                 @OA\Property(property="bedroom", type="integer", example=3),
+     *                 @OA\Property(property="bathrooms", type="integer", example=2),
+     *                 @OA\Property(property="half_bath", type="integer", example=1),
+     *                 @OA\Property(property="parking_lots", type="integer", example=2),
+     *                 @OA\Property(property="construction", type="number", format="float", example=120.5),
+     *                 @OA\Property(property="year_construction", type="integer", example=2015),
+     *                 @OA\Property(property="number_plants", type="integer", example=1),
+     *                 @OA\Property(property="number_floors", type="integer", example=2),
+     *                 @OA\Property(property="monthly_maintence", type="number", format="float", example=150.75),
+     *                 @OA\Property(property="internal_key", type="string", example="INT123"),
+     *                 @OA\Property(property="key_code", type="string", example="KEY456"),
+     *                 @OA\Property(property="user_id", type="integer", example="1"),
+     *                 @OA\Property(property="street", type="integer", example="1"),
+     *                 @OA\Property(property="corner_with", type="integer", example="1"),
+     *                 @OA\Property(property="postal_code", type="integer", example="1"),
+     *                 @OA\Property(property="property_features", type="integer", example="Features"),
+     *                 @OA\Property(property="share_commission", type="integer", example="1"),
+     *                 @OA\Property(property="commission_percent", type="integer", example="1"),
+     *                 @OA\Property(property="condition_sharing", type="integer", example="Sharing"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-05-21T13:45:00Z"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-05-21T13:45:00Z")
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Property retrieved successfully"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Property not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=false
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Property not found"
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function show($id): JsonResponse
     {
@@ -531,5 +610,117 @@ class PropertyAPIController extends AppBaseController
         }
 
         return $this->sendResponse('Property images inserted successfully', $data);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/properties/{id}/images",
+     *     summary="Get property images",
+     *     tags={"Property Images"},
+     *     description="Retrieve all images for a specific property by its ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the property",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="All Property images"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer",
+     *                         example=1
+     *                     ),
+     *                     @OA\Property(
+     *                         property="url",
+     *                         type="string",
+     *                         example="http://example.com/images/1.jpg"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Property not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=false
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Property not found"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function getImages($id)
+    {
+        $images = $this->propertyImageRepo->findWhere(['property_id' => $id]);
+
+        return $this->sendResponse('All Property images', $images);
+    }
+
+    /**
+     * Retrieve property by user ID
+     *
+     * @OA\Get(
+     *     path="/api/properties/{id}/user",
+     *     summary="Retrieve property by user ID",
+     *     tags={"Properties"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the user",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Property")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Property not found"
+     *     )
+     * )
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPropertyByUserId($id)
+    {
+        $property = $this->propertyRepository->with('images')->findWhere(['user_id' =>  $id]);
+
+        return $this->sendResponse('All Property', $property);
     }
 }

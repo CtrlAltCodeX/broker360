@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PropertyBoardsController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.content');
-});
+Route::get('/', [DashboardController::class, 'index']);
 
 Route::prefix('users')->group(function () {
     Route::get('list', [UserController::class, 'index'])
@@ -57,6 +58,46 @@ Route::prefix('contacts')->group(function () {
 
     Route::get('delete/{id}', [ContactsController::class, 'destroy'])
         ->name('admin.contacts.delete');
+});
+
+Route::prefix('property')->group(function () {
+    Route::get('list', [PropertyController::class, 'index'])
+        ->name('admin.properties.index');
+
+    Route::get('create', [PropertyController::class, 'create'])
+        ->name('admin.properties.create');
+
+    Route::post('create', [PropertyController::class, 'store'])
+        ->name('admin.properties.store');
+
+    Route::get('edit/{id}', [PropertyController::class, 'edit'])
+        ->name('admin.properties.edit');
+
+    Route::post('update/{id}', [PropertyController::class, 'update'])
+        ->name('admin.properties.update');
+
+    Route::get('delete/{id}', [PropertyController::class, 'destroy'])
+        ->name('admin.properties.delete');
+});
+
+Route::prefix('board')->group(function () {
+    Route::get('list', [PropertyBoardsController::class, 'index'])
+        ->name('admin.boards.index');
+
+    Route::get('create', [PropertyBoardsController::class, 'create'])
+        ->name('admin.boards.create');
+
+    Route::post('create', [PropertyBoardsController::class, 'store'])
+        ->name('admin.boards.store');
+
+    Route::get('edit/{id}', [PropertyBoardsController::class, 'edit'])
+        ->name('admin.boards.edit');
+
+    Route::post('update/{id}', [PropertyBoardsController::class, 'update'])
+        ->name('admin.boards.update');
+
+    Route::get('delete/{id}', [PropertyBoardsController::class, 'destroy'])
+        ->name('admin.boards.delete');
 });
 
 Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder')->name('io_generator_builder');

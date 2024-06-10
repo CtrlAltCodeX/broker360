@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="w-100 d-flex justify-content-end mb-4">
-                <a class="btn btn-primary" href="{{ route('admin.contacts.create') }}">New</a>
+                <a class="btn btn-primary" href="{{ route('admin.users.create') }}">New</a>
             </div>
             <table class="table table-bordered table-responsive">
                 <thead>

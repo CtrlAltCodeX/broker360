@@ -23,14 +23,14 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
+                <li class="nav-item"> <a href="{{ route('admin.boards.index') }}" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
                         <p>
                             Total property Boards
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                <li class="nav-item"> <a href="{{ route('admin.properties.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
                             Properties
 
