@@ -32,6 +32,10 @@ class Property extends Model
         'share_commission',
         'commission_percent',
         'condition_sharing',
+        'price',
+        'longitude_latitude',
+        'status',
+        'user_id',
     ];
 
     protected $casts = [
@@ -56,11 +60,12 @@ class Property extends Model
         'operation_type' => 'required',
         'show_price_ad' => 'required',
         'construction' => 'required',
-        'number_plants' => 'required'
+        'number_plants' => 'required',
+        'price' => 'required',
     ];
 
     public function images()
     {
         return $this->hasMany(PropertyImage::class);
     }
-}   
+}

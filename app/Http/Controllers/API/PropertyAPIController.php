@@ -241,6 +241,8 @@ class PropertyAPIController extends AppBaseController
      *             @OA\Property(property="share_commission", type="integer", example="1"),
      *             @OA\Property(property="commission_percent", type="integer", example="1"),
      *             @OA\Property(property="condition_sharing", type="integer", example="Sharing"),
+     *             @OA\Property(property="price", type="integer", example="1"),
+     *             @OA\Property(property="longitude_latitude", type="string", example="Sharing"),
      *         )
      *     ),
      *     @OA\Response(
@@ -274,6 +276,8 @@ class PropertyAPIController extends AppBaseController
      *                 @OA\Property(property="share_commission", type="integer", example="1"),
      *                 @OA\Property(property="commission_percent", type="integer", example="1"),
      *                 @OA\Property(property="condition_sharing", type="integer", example="Sharing"),
+     *                 @OA\Property(property="price", type="integer", example="1"),
+     *                 @OA\Property(property="longitude_latitude", type="string", example="Sharing"),
      *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-05-21T13:45:00Z"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-05-21T13:45:00Z")
      *             ),
@@ -722,5 +726,66 @@ class PropertyAPIController extends AppBaseController
         $property = $this->propertyRepository->with('images')->findWhere(['user_id' =>  $id]);
 
         return $this->sendResponse('All Property', $property);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/properties/{id}/status",
+     *     summary="Update the status of a property",
+     *     description="Update the status of a property by its ID",
+     *     tags={"Properties"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the property to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="1"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Property status updated",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Property status updated"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 ref="#/components/schemas/Property"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Property not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Property not found"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function updateStatus($id)
+    {
+        $property = $this->propertyRepository->update(['status' => request()->status], $id);
+
+        return $this->sendResponse('Property status updated', $property);
     }
 }

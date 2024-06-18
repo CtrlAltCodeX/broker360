@@ -33,6 +33,7 @@ class PropertyRepository extends EloquentBaseRepository
         'share_commission',
         'commission_percent',
         'condition_sharing',
+        'status',
     ];
 
     public function getFieldsSearchable(): array

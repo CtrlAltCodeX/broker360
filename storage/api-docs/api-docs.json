@@ -728,6 +728,14 @@
                                     "condition_sharing": {
                                         "type": "integer",
                                         "example": "Sharing"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "longitude_latitude": {
+                                        "type": "string",
+                                        "example": "Sharing"
                                     }
                                 },
                                 "type": "object"
@@ -848,6 +856,14 @@
                                                 },
                                                 "condition_sharing": {
                                                     "type": "integer",
+                                                    "example": "Sharing"
+                                                },
+                                                "price": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "longitude_latitude": {
+                                                    "type": "string",
                                                     "example": "Sharing"
                                                 },
                                                 "created_at": {
@@ -1526,6 +1542,80 @@
                     },
                     "404": {
                         "description": "Property not found"
+                    }
+                }
+            }
+        },
+        "/api/properties/{id}/status": {
+            "put": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Update the status of a property",
+                "description": "Update the status of a property by its ID",
+                "operationId": "d7203855cbc69874def379204b45cd6c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the property to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "1",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Property status updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property status updated"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Property"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Property not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Property not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

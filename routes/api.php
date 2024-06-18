@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function () {
         return auth()->user();
     });
@@ -27,11 +27,15 @@ use Illuminate\Support\Facades\Route;
     Route::resource('properties', App\Http\Controllers\API\PropertyAPIController::class)
         ->except(['create', 'edit']);
 
-    Route::post('properties/images', [PropertyAPIController::class, 'storeImages']);
+    Route::group(['prefix' => 'properties'], function () {
+        Route::post('images', [PropertyAPIController::class, 'storeImages']);
 
-    Route::post('properties/{id}/images', [PropertyAPIController::class, 'getImages']);
+        Route::put('{id}/status', [PropertyAPIController::class, 'updateStatus']);
 
-    Route::get('properties/{id}/user', [PropertyAPIController::class, 'getPropertyByUserId']);
+        Route::get('{id}/images', [PropertyAPIController::class, 'getImages']);
+
+        Route::get('{id}/user', [PropertyAPIController::class, 'getPropertyByUserId']);
+    });
 
     Route::resource('property-boards', App\Http\Controllers\API\PropertyBoardsAPIController::class)
         ->except(['create', 'edit']);
@@ -40,7 +44,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
         ->except(['create', 'edit']);
-// });
+});
 
 Route::post('login', [UserAPIController::class, 'login']);
 
