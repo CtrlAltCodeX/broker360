@@ -29,6 +29,10 @@
                         <input type="checkbox" id="exampleInputShowPriceAd" name="show_price_ad" {{ $properties->show_price_ad ? 'checked' : '' }}>
                     </div>
                     <div class="mb-3">
+                        <label for="exampleInputBedroom" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="exampleInputBedroom" name="price" value="{{ $properties->price }}">
+                    </div>
+                    <div class="mb-3">
                         <label for="exampleInputBedroom" class="form-label">Bedroom</label>
                         <input type="number" class="form-control" id="exampleInputBedroom" name="bedroom" value="{{ $properties->bedroom }}">
                     </div>
