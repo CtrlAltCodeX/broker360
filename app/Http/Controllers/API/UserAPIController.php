@@ -44,7 +44,7 @@ class UserAPIController extends AppBaseController
 
     /**
      * @OA\Post(
-     *     path="/api/users",
+     *     path="/api/register",
      *     summary="Register a new user",
      *     tags={"Authentication"},
      *     @OA\RequestBody(
@@ -55,8 +55,6 @@ class UserAPIController extends AppBaseController
      *             @OA\Property(property="email", type="string", example="user@example.com"),
      *             @OA\Property(property="number", type="string", example="987654321"),
      *             @OA\Property(property="password", type="string", example="admin123"),
-     *             @OA\Property(property="country", type="string", example="I want to real estate company"),
-     *             @OA\Property(property="identity", type="string", example="Argentina")
      *         )
      *     ),
      *     @OA\Response(
@@ -71,8 +69,6 @@ class UserAPIController extends AppBaseController
      *                     @OA\Property(property="email", type="string", example="user@example.com"),
      *                     @OA\Property(property="number", type="string", example="user@example.com"),
      *                     @OA\Property(property="password", type="string", example="admin123"),
-     *                     @OA\Property(property="country", type="string", example="I want to real estate company"),
-     *                     @OA\Property(property="identity", type="string", example="Argentina")
      *                 )
      *             ),
      *             @OA\Property(property="message", type="string", example="User registered successfully")

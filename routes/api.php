@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('login', [UserAPIController::class, 'login']);
 
+Route::post('register', [UserAPIController::class, 'store']);
+
 Route::post('forget-password', [UserAPIController::class, 'forgetPassword']);
 
 Route::post('reset-password', [UserAPIController::class, 'resetPassword']);
