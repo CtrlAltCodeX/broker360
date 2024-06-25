@@ -28,7 +28,13 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->string('address')->nullable();
             $table->string('description')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade'); // Optional: Define the action on delete
         });
     }
 

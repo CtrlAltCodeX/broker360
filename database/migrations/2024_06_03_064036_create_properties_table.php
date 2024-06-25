@@ -31,8 +31,13 @@ return new class extends Migration
             $table->integer('monthly_maintence')->nullable();
             $table->string('internal_key')->nullable();
             $table->string('key_code')->nullable();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade'); // Optional: Define the action on delete
         });
     }
 

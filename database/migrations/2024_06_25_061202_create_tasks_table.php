@@ -13,13 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('property_boards', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id('id');
-            $table->string('name');
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            $table->text('desc');
+            $table->date('date');
+            $table->time('time');
+            $table->unsignedBigInteger('assigned_to');
+            $table->string('category');
+            $table->string('link');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
 
-            $table->foreign('user_id')
+            $table->foreign('assigned_to')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade'); // Optional: Define the action on delete
@@ -33,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::drop('property_boards');
+        Schema::drop('tasks');
     }
 };

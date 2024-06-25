@@ -16,8 +16,13 @@ return new class extends Migration
         Schema::create('property_images', function (Blueprint $table) {
             $table->id('id');
             $table->string('url');
-            $table->integer('property_id');
+            $table->unsignedBigInteger('property_id');
             $table->timestamps();
+
+            $table->foreign('property_id')
+                ->references('id')
+                ->on('properties')
+                ->onDelete('cascade'); // Optional: Define the action on delete
         });
     }
 

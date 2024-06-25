@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\PropertyAPIController;
+use App\Http\Controllers\API\TaskAPIController;
 use App\Http\Controllers\API\UserAPIController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
         ->except(['create', 'edit']);
+
+    Route::resource('tasks', App\Http\Controllers\API\TaskAPIController::class)
+        ->except(['create', 'edit']);
+
+    Route::get('task/user/{user_id}', [TaskAPIController::class, 'taskByUser']);
 });
 
 Route::post('login', [UserAPIController::class, 'login']);

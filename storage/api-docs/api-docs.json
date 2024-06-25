@@ -1732,13 +1732,328 @@
                 }
             }
         },
-        "/api/users": {
+        "/api/tasks": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Store a newly created Task",
+                "description": "Store a newly created Task in storage",
+                "operationId": "storeTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "desc",
+                                    "date",
+                                    "time",
+                                    "assigned_to",
+                                    "category",
+                                    "link"
+                                ],
+                                "properties": {
+                                    "desc": {
+                                        "type": "string",
+                                        "example": "Task description"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-06-05"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "format": "time",
+                                        "example": "14:30:00"
+                                    },
+                                    "assigned_to": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Work"
+                                    },
+                                    "link": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Task saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Task"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task saved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get a task by ID",
+                "description": "Returns a task with specified ID",
+                "operationId": "getTaskById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the task to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "desc": {
+                                                    "type": "string",
+                                                    "example": "Task description"
+                                                },
+                                                "date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-06-05"
+                                                },
+                                                "time": {
+                                                    "type": "string",
+                                                    "format": "time",
+                                                    "example": "14:00:00"
+                                                },
+                                                "assigned_to": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "category": {
+                                                    "type": "string",
+                                                    "example": "Development"
+                                                },
+                                                "link": {
+                                                    "type": "string",
+                                                    "format": "url",
+                                                    "example": "http://example.com/task/1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/user/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get tasks by user ID",
+                "description": "Returns tasks for the specified user ID",
+                "operationId": "getTasksByUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user whose tasks to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tasks retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "desc": {
+                                                        "type": "string",
+                                                        "example": "Task description"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-05"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "14:00:00"
+                                                    },
+                                                    "assigned_to": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "category": {
+                                                        "type": "string",
+                                                        "example": "Development"
+                                                    },
+                                                    "link": {
+                                                        "type": "string",
+                                                        "format": "url",
+                                                        "example": "http://example.com/task/1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tasks retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Register a new user",
-                "operationId": "e90e2e1beb42fb3b322efbdbd7e19329",
+                "operationId": "b37ed7422332faa2deb124073d0338b7",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1764,14 +2079,6 @@
                                     "password": {
                                         "type": "string",
                                         "example": "admin123"
-                                    },
-                                    "country": {
-                                        "type": "string",
-                                        "example": "I want to real estate company"
-                                    },
-                                    "identity": {
-                                        "type": "string",
-                                        "example": "Argentina"
                                     }
                                 },
                                 "type": "object"
@@ -1813,14 +2120,6 @@
                                                         "password": {
                                                             "type": "string",
                                                             "example": "admin123"
-                                                        },
-                                                        "country": {
-                                                            "type": "string",
-                                                            "example": "I want to real estate company"
-                                                        },
-                                                        "identity": {
-                                                            "type": "string",
-                                                            "example": "Argentina"
                                                         }
                                                     },
                                                     "type": "object"
@@ -2509,6 +2808,39 @@
                     },
                     "user_id": {
                         "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Task": {
+                "title": "Task",
+                "description": "Task model",
+                "properties": {
+                    "id": {
+                        "description": "Task ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Task name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Task description",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Task status",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
