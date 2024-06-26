@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('emails')->nullable();
             $table->string('timezone')->nullable();
             $table->string('profile_url')->nullable();
+            $table->tinyInteger('role')->default(0);
         });
     }
 

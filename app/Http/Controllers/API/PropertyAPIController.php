@@ -32,6 +32,15 @@ class PropertyAPIController extends AppBaseController
      *     summary="Display a listing of the Properties",
      *     tags={"Properties"},
      *     @OA\Parameter(
+     *         name="s",
+     *         in="query",
+     *         description="Search term to filter properties",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Parameter(
      *         name="skip",
      *         in="query",
      *         description="Number of records to skip",
@@ -199,13 +208,23 @@ class PropertyAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $properties = $this->propertyRepository->with('images')->all(
-            ['*'],
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $searchTerm = $request->input('s');
+        $skip = $request->input('skip', 0);
+        $limit = $request->input('limit', 10);
 
-        return $this->sendResponse($properties->toArray(), 'Properties retrieved successfully');
+        $columns = ['type', 'ad_type', 'ad_desc', 'price', 'street', 'corner_with', 'postal_code', 'postal_code', 'postal_code']; // Add more columns as needed
+
+        $properties = $this->propertyRepository->with('images')
+            ->where(function ($query) use ($searchTerm, $columns) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$searchTerm}%");
+                }
+            })
+            ->skip($skip)
+            ->take($limit)
+            ->get();
+
+        return $this->sendResponse('Properties retrieved successfully', $properties->toArray());
     }
 
     /**
@@ -308,7 +327,7 @@ class PropertyAPIController extends AppBaseController
 
         $property = $this->propertyRepository->create($input);
 
-        return $this->sendResponse($property->toArray(), 'Property saved successfully');
+        return $this->sendResponse('Property saved successfully', $property->toArray());
     }
 
     /**
@@ -403,7 +422,7 @@ class PropertyAPIController extends AppBaseController
             return $this->sendError('Property not found');
         }
 
-        return $this->sendResponse($property->toArray(), 'Property retrieved successfully');
+        return $this->sendResponse('Property retrieved successfully', $property->toArray());
     }
 
     /**
@@ -490,7 +509,7 @@ class PropertyAPIController extends AppBaseController
 
         $property = $this->propertyRepository->update($input, $id);
 
-        return $this->sendResponse($property->toArray(), 'Property updated successfully');
+        return $this->sendResponse('Property updated successfully', $property->toArray());
     }
 
     /**

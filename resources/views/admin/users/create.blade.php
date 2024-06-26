@@ -29,6 +29,15 @@
                         <input type="file" class="form-control" id="exampleInputPassword1" name="profile">
                     </div>
 
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Role</label>
+                        <select class="form-control">
+                            <option value="">--Select--</option>
+                            <option value=1 >Admin</option>
+                            <option value=0 >Member</option>
+                        </select>
+                    </div>
+
                 </div> <!--end::Body--> <!--begin::Footer-->
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->
             </form> <!--end::Form-->

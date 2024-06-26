@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('link');
             $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            // $table->timestamp('updated_at');
 
             $table->foreign('assigned_to')
                 ->references('id')

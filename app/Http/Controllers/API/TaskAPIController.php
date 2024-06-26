@@ -218,8 +218,48 @@ class TaskAPIController extends AppBaseController
     }
 
     /**
-     * Update the specified Task in storage.
-     * PUT/PATCH /tasks/{id}
+     * @OA\Put(
+     *     path="/api/tasks/{id}",
+     *     summary="Update the specified Task",
+     *     tags={"Tasks"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="desc", type="string"),
+     *             @OA\Property(property="date", type="string", format="date"),
+     *             @OA\Property(property="time", type="string", format="time"),
+     *             @OA\Property(property="assigned_to", type="string"),
+     *             @OA\Property(property="category", type="string"),
+     *             @OA\Property(property="link", type="string", format="url")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Task updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean"),
+     *             @OA\Property(property="data", type="object"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Task not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
      */
     public function update($id, UpdateTaskAPIRequest $request): JsonResponse
     {
@@ -238,8 +278,35 @@ class TaskAPIController extends AppBaseController
     }
 
     /**
-     * Remove the specified Task from storage.
-     * DELETE /tasks/{id}
+     * @OA\Delete(
+     *     path="/api/tasks/{id}",
+     *     summary="Remove the specified Task",
+     *     tags={"Tasks"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Task deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Task not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
      *
      * @throws \Exception
      */
@@ -336,7 +403,7 @@ class TaskAPIController extends AppBaseController
      */
     public function taskByUser($id)
     {
-        $tasks = $this->taskRepository->findByField('user_id', $id);
+        $tasks = $this->taskRepository->findByField('assigned_to', $id);
 
         return $this->sendResponse('Tasks retrieved successfully', $tasks);
     }

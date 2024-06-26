@@ -123,6 +123,12 @@ class UserController extends AppBaseController
             }
         }
 
+        if ($input['password'] != "") {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            unset($input['password']);
+        }
+
         $user = $this->userRepository->update($input, $id);
 
         FlashFlash::success('User updated successfully.');
