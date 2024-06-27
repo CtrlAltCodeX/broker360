@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePropertyAPIRequest;
 use App\Http\Requests\API\CreatePropertyBoardsAPIRequest;
+use App\Models\User;
 use App\Repositories\PropertyBoardsRepository;
 use App\Repositories\PropertyRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash as FlashFlash;
 
@@ -15,8 +17,10 @@ class PropertyBoardsController extends AppBaseController
     /** @var PropertyRepository $propertyRepository*/
     private $propertyboardRepo;
 
-    public function __construct(PropertyBoardsRepository $propertyboardRepo)
-    {
+    public function __construct(
+        PropertyBoardsRepository $propertyboardRepo,
+        public UserRepository $userRepository
+    ) {
         $this->propertyboardRepo = $propertyboardRepo;
     }
 
@@ -36,7 +40,9 @@ class PropertyBoardsController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.property-board.create');
+        $allUsers = $this->userRepository->all();
+
+        return view('admin.property-board.create', compact('allUsers'));
     }
 
     /**
@@ -76,13 +82,15 @@ class PropertyBoardsController extends AppBaseController
     {
         $boards = $this->propertyboardRepo->find($id);
 
+        $allUsers = $this->userRepository->all();
+
         if (empty($boards)) {
             FlashFlash::error('Boards not found');
 
             return redirect(route('admin.boards.index'));
         }
 
-        return view('admin.property-board.edit')->with('boards', $boards);
+        return view('admin.property-board.edit', compact('allUsers', 'boards'));
     }
 
     /**

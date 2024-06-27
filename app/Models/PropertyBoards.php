@@ -9,7 +9,8 @@ class PropertyBoards extends Model
     public $table = 'property_boards';
 
     public $fillable = [
-        'name'
+        'name',
+        'user_id',
     ];
 
     protected $casts = [
@@ -17,8 +18,7 @@ class PropertyBoards extends Model
     ];
 
     public static array $rules = [
-        'name' => 'required'
+        'name' => 'required',
+        'user_id' => 'required'
     ];
-
-    
 }
