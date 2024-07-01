@@ -49,6 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
         ->except(['create', 'edit']);
 
     Route::get('task/user/{user_id}', [TaskAPIController::class, 'taskByUser']);
+
+    Route::resource('plans', App\Http\Controllers\API\PlanAPIController::class)
+        ->except(['create', 'edit']);
+
+    Route::resource('cards', App\Http\Controllers\API\CardAPIController::class)
+        ->except(['create', 'edit']);
 });
 
 Route::post('login', [UserAPIController::class, 'login']);
