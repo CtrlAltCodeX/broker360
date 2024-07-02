@@ -24,7 +24,7 @@ class PlanAPIController extends AppBaseController
 
     /**
      * @OA\Get(
-     *     path="/plans",
+     *     path="/api/plans",
      *     summary="Display a listing of the Plans",
      *     tags={"Plans"},
      *     @OA\Parameter(
@@ -82,7 +82,7 @@ class PlanAPIController extends AppBaseController
 
     /**
      * @OA\Post(
-     *     path="/plans",
+     *     path="/api/plans",
      *     summary="Store a newly created Plan in storage",
      *     tags={"Plans"},
      *     @OA\RequestBody(

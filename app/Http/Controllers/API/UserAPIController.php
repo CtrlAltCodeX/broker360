@@ -28,8 +28,60 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the Users.
-     * GET|HEAD /users
+     * @OA\Get(
+     *     path="/users",
+     *     summary="Display a listing of the Users",
+     *     description="Retrieve a list of users with optional pagination",
+     *     operationId="getUsersList",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="skip",
+     *         in="query",
+     *         description="Number of records to skip for pagination",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Number of records to return",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Users retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="John Doe"),
+     *                 @OA\Property(property="email", type="string", example="johndoe@example.com"),
+     *                 @OA\Property(property="number", type="string", example="+123456789"),
+     *                 @OA\Property(property="agency_name", type="string", example="Agency XYZ"),
+     *                 @OA\Property(property="lang", type="string", example="en"),
+     *                 @OA\Property(property="timezone", type="string", example="UTC"),
+     *                 @OA\Property(property="profile_url", type="string", example="http://example.com/profile.jpg")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found"
+     *     )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
