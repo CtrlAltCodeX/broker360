@@ -9,6 +9,7 @@ use App\Repositories\PropertyRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Collaboration;
 use App\Repositories\PropertyImageRepository;
 use Illuminate\Http\UploadedFile;
 
@@ -806,5 +807,79 @@ class PropertyAPIController extends AppBaseController
         $property = $this->propertyRepository->update(['status' => request()->status], $id);
 
         return $this->sendResponse('Property status updated', $property);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/collaborations/invite",
+     *     summary="Invite an agent to collaborate",
+     *     tags={"Collaborations"},
+     *     description="Invite an agent to collaborate with the user.",
+     *     operationId="inviteCollaboration",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="user_id",
+     *                 type="integer",
+     *                 description="ID of the user"
+     *             ),
+     *             @OA\Property(
+     *                 property="agent_id",
+     *                 type="integer",
+     *                 description="ID of the agent"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Agent Invited",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Agent Invited"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Already Collaborated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=false
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Already Collaborated"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function inviteCollaboration()
+    {
+        $collaborations = Collaboration::where('user_id', request()->user_id)
+            ->where('agent_id', request()->agent_id)
+            ->first();
+
+        if ($collaborations) return $this->sendError('Already Collaborated');
+
+        Collaboration::create([
+            'user_id' => request()->user_id,
+            'agent_id' => request()->agent_id
+        ]);
+
+        return $this->sendResponse('Agent Invited');
     }
 }

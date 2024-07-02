@@ -25,8 +25,70 @@ class MailAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the Mails.
-     * GET|HEAD /mails
+     * @OA\Get(
+     *     path="/api/mails",
+     *     summary="Retrieve a list of mails",
+     *     tags={"Mail"},
+     *     description="Returns a list of mails",
+     *     operationId="getMails",
+     *     @OA\Parameter(
+     *         name="skip",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer"),
+     *         description="Number of records to skip"
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer"),
+     *         description="Maximum number of records to return"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mails retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Mail")
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Mails retrieved successfully"
+     *             )
+     *         )
+     *     )
+     * )
+     * 
+     * @OA\Schema(
+     *     schema="Mail",
+     *     type="object",
+     *     required={"id", "subject", "body"},
+     *     @OA\Property(
+     *         property="id",
+     *         type="integer",
+     *         description="ID of the mail"
+     *     ),
+     *     @OA\Property(
+     *         property="subject",
+     *         type="string",
+     *         description="Subject of the mail"
+     *     ),
+     *     @OA\Property(
+     *         property="body",
+     *         type="string",
+     *         description="Body of the mail"
+     *     )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -38,6 +100,7 @@ class MailAPIController extends AppBaseController
 
         return $this->sendResponse('Mails retrieved successfully', $mails->toArray());
     }
+
 
     /**
      * @OA\Post(

@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('properties', App\Http\Controllers\API\PropertyAPIController::class)
         ->except(['create', 'edit']);
 
+    Route::post('collaborations/invite', [PropertyAPIController::class, 'inviteCollaboration']);
+
     Route::group(['prefix' => 'properties'], function () {
         Route::post('images', [PropertyAPIController::class, 'storeImages']);
 
@@ -45,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', App\Http\Controllers\API\UserAPIController::class)
         ->except(['create', 'edit']);
 
-    Route::post('users/{id}', [UserAPIController::class, 'show']);
+    Route::post('users/{id}', [UserAPIController::class, 'update']);
 
     Route::resource('tasks', App\Http\Controllers\API\TaskAPIController::class)
         ->except(['create', 'edit']);
