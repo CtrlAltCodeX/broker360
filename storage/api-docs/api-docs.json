@@ -1962,6 +1962,61 @@
                 }
             }
         },
+        "/api/collaborations": {
+            "get": {
+                "tags": [
+                    "Collaborations"
+                ],
+                "summary": "Get a list of collaborations for a user",
+                "operationId": "0e7b7baeec63a5f2e6d7604f5636bcf9",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID of the user to fetch collaborations for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "All Agents"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Collaboration"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/property-boards": {
             "get": {
                 "tags": [
@@ -2535,7 +2590,7 @@
                 }
             }
         },
-        "/users": {
+        "/api/users": {
             "get": {
                 "tags": [
                     "Users"
@@ -2740,7 +2795,102 @@
             }
         },
         "/api/users/{id}": {
-            "put": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retrieve a user by ID",
+                "description": "Retrieve a user by their unique ID",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the user to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Updated User"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                },
+                                                "number": {
+                                                    "type": "integer",
+                                                    "example": 987456321
+                                                },
+                                                "agency_name": {
+                                                    "type": "string",
+                                                    "example": "Example Agency"
+                                                },
+                                                "lang": {
+                                                    "type": "string",
+                                                    "example": "English"
+                                                },
+                                                "timezone": {
+                                                    "type": "string",
+                                                    "example": "Timezone"
+                                                },
+                                                "profile_url": {
+                                                    "type": "object",
+                                                    "example": [],
+                                                    "additionalProperties": []
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
                 "tags": [
                     "Users"
                 ],
@@ -3456,6 +3606,23 @@
                     "condition_sharing": {
                         "description": "condition_sharing",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Collaboration": {
+                "properties": {
+                    "id": {
+                        "description": "The ID of the collaboration",
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "description": "The ID of the user",
+                        "type": "integer"
+                    },
+                    "agent_id": {
+                        "description": "The ID of the agent",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

@@ -882,4 +882,75 @@ class PropertyAPIController extends AppBaseController
 
         return $this->sendResponse('Agent Invited');
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/collaborations",
+     *     summary="Get a list of collaborations for a user",
+     *     tags={"Collaborations"},
+     *     @OA\Parameter(
+     *         name="user_id",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         ),
+     *         description="ID of the user to fetch collaborations for"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="All Agents"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Collaboration")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found"
+     *     ),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     }
+     * )
+     * 
+     * @OA\Schema(
+     *     schema="Collaboration",
+     *     type="object",
+     *     @OA\Property(
+     *         property="id",
+     *         type="integer",
+     *         description="The ID of the collaboration"
+     *     ),
+     *     @OA\Property(
+     *         property="user_id",
+     *         type="integer",
+     *         description="The ID of the user"
+     *     ),
+     *     @OA\Property(
+     *         property="agent_id",
+     *         type="integer",
+     *         description="The ID of the agent"
+     *     ),
+     * )
+     */
+    public function getCollaboration()
+    {
+        $collaborationList = Collaboration::where('user_id', request()->user_id)->get();
+
+        return $this->sendResponse('All Agents', $collaborationList);
+    }
 }

@@ -13,6 +13,7 @@ use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Collaboration;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -29,7 +30,7 @@ class UserAPIController extends AppBaseController
 
     /**
      * @OA\Get(
-     *     path="/users",
+     *     path="/api/users",
      *     summary="Display a listing of the Users",
      *     description="Retrieve a list of users with optional pagination",
      *     operationId="getUsersList",
@@ -91,7 +92,17 @@ class UserAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse('Users retrieved successfully', $users->toArray());
+        $userData = [];
+        foreach ($users as $key => $user) {
+            $isExists = Collaboration::where('agent_id', $user->id)
+                ->where('user_id', 1)
+                ->exists();
+
+            $userData[] = $user;
+            $userData[$key]['collaboration'] = $isExists;
+        }
+
+        return $this->sendResponse('Users retrieved successfully', $userData);
     }
 
     /**
@@ -164,8 +175,96 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * Display the specified User.
-     * GET|HEAD /users/{id}
+     * @OA\Get(
+     *     path="/api/users/{id}",
+     *     summary="Retrieve a user by ID",
+     *     description="Retrieve a user by their unique ID",
+     *     operationId="getUserById",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         ),
+     *         description="The ID of the user to retrieve"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="Updated User"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     example="user@example.com"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="number",
+     *                     type="integer",
+     *                     example=987456321
+     *                 ),
+     *                 @OA\Property(
+     *                     property="agency_name",
+     *                     type="string",
+     *                     example="Example Agency"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="lang",
+     *                     type="string",
+     *                     example="English"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="timezone",
+     *                     type="string",
+     *                     example="Timezone"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="profile_url",
+     *                     type="object",
+     *                     additionalProperties={},
+     *                     example={}
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="User retrieved successfully"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=false
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="User not found"
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function show($id): JsonResponse
     {
@@ -180,7 +279,7 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * @OA\Put(
+     * @OA\Post(
      *     path="/api/users/{id}",
      *     summary="Update the specified User in storage.",
      *     operationId="updateUser",
