@@ -62,6 +62,7 @@ class Property extends Model
         'construction' => 'required',
         'number_plants' => 'required',
         'price' => 'required',
+        'user_id' => 'required',
     ];
 
     public function images()

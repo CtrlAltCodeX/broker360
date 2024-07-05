@@ -9,28 +9,28 @@
                 <div class="card-body">
                     <!-- New Fields -->
                     <div class="mb-3">
-                        <label for="exampleInputType" class="form-label">Type</label>
+                        <label for="exampleInputType" class="form-label required">Type</label>
                         <input type="text" class="form-control" id="exampleInputType" name="type" value="{{ $properties->type }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputAdType" class="form-label">Ad Type</label>
+                        <label for="exampleInputAdType" class="form-label required">Ad Type</label>
                         <input type="text" class="form-control" id="exampleInputAdType" name="ad_type" value="{{ $properties->ad_type }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputAdDesc" class="form-label">Ad Description</label>
-                        <input type="text" class="form-control" id="exampleInputAdDesc" name="ad_desc" value="{{ $properties->ad_desc }}">
+                        <label for="exampleInputAdDesc" class="form-label required">Ad Description</label>
+                        <input type="text" class="form-control" required id="exampleInputAdDesc" name="ad_desc" value="{{ $properties->ad_desc }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputOperationType" class="form-label">Operation Type</label>
-                        <input type="text" class="form-control" id="exampleInputOperationType" name="operation_type" value="{{ $properties->operation_type }}">
+                        <label for="exampleInputOperationType" class="form-label required">Operation Type</label>
+                        <input type="text" class="form-control" required id="exampleInputOperationType" name="operation_type" value="{{ $properties->operation_type }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputShowPriceAd" class="form-label">Show Price Ad</label>
+                        <label for="exampleInputShowPriceAd" class="form-label required">Show Price Ad</label>
                         <input type="checkbox" id="exampleInputShowPriceAd" name="show_price_ad" {{ $properties->show_price_ad ? 'checked' : '' }}>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputBedroom" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="exampleInputBedroom" name="price" value="{{ $properties->price }}">
+                        <label for="exampleInputBedroom" class="form-label required">Price</label>
+                        <input type="number" class="form-control" required id="exampleInputBedroom" name="price" value="{{ $properties->price }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputBedroom" class="form-label">Bedroom</label>
@@ -49,16 +49,16 @@
                         <input type="number" class="form-control" id="exampleInputParkingLots" name="parking_lots" value="{{ $properties->parking_lots }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputConstruction" class="form-label">Construction (sqm)</label>
-                        <input type="number" class="form-control" id="exampleInputConstruction" name="construction" value="{{ $properties->construction }}">
+                        <label for="exampleInputConstruction" class="form-label required">Construction (sqm)</label>
+                        <input type="number" class="form-control" required id="exampleInputConstruction" name="construction" value="{{ $properties->construction }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputYearConstruction" class="form-label">Year of Construction</label>
                         <input type="number" class="form-control" id="exampleInputYearConstruction" name="year_construction" value="{{ $properties->year_construction }}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputNumberPlants" class="form-label">Number of Plants</label>
-                        <input type="number" class="form-control" id="exampleInputNumberPlants" name="number_plants" value="{{ $properties->number_plants }}">
+                        <label for="exampleInputNumberPlants" class="form-label required">Number of Plants</label>
+                        <input type="number" class="form-control" required id="exampleInputNumberPlants" name="number_plants" value="{{ $properties->number_plants }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputNumberFloors" class="form-label">Number of Floors</label>
@@ -75,10 +75,6 @@
                     <div class="mb-3">
                         <label for="exampleInputKeyCode" class="form-label">Key Code</label>
                         <input type="text" class="form-control" id="exampleInputKeyCode" name="key_code" value="{{ $properties->key_code }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputUserId" class="form-label">User ID</label>
-                        <input type="number" class="form-control" id="exampleInputUserId" name="user_id" value="{{ $properties->user_id }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputStreet" class="form-label">Street</label>
@@ -107,6 +103,15 @@
                     <div class="mb-3">
                         <label for="exampleInputConditionSharing" class="form-label">Condition Sharing</label>
                         <input type="text" class="form-control" id="exampleInputConditionSharing" name="condition_sharing" value="{{ $properties->condition_sharing }}">
+                    </div>
+                    <div class="mb-3">
+                        <label>Users</label>
+                        <select class="form-control required" name="user_id" required>
+                            <option value="">--Select--</option>
+                            @foreach($users as $user)
+                            <option value="{{$user->id}}" {{ $user->id == $properties->user_id ? 'selected' : '' }}>{{$user->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->

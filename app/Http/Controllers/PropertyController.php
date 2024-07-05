@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePropertyAPIRequest;
 use App\Repositories\PropertyRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash as FlashFlash;
 
@@ -15,8 +14,10 @@ class PropertyController extends AppBaseController
     /** @var PropertyRepository $propertyRepository*/
     private $propertyRepository;
 
-    public function __construct(PropertyRepository $propertyRepository)
-    {
+    public function __construct(
+        PropertyRepository $propertyRepository,
+        public UserRepository $userRepository
+    ) {
         $this->propertyRepository = $propertyRepository;
     }
 
@@ -36,7 +37,9 @@ class PropertyController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.properties.create');
+        $users = $this->userRepository->all();
+
+        return view('admin.properties.create', compact('users'));
     }
 
     /**
@@ -78,13 +81,15 @@ class PropertyController extends AppBaseController
     {
         $properties = $this->propertyRepository->find($id);
 
+        $users = $this->userRepository->all();
+
         if (empty($properties)) {
             FlashFlash::error('Properties not found');
 
             return redirect(route('admin.properties.index'));
         }
 
-        return view('admin.properties.edit')->with('properties', $properties);
+        return view('admin.properties.edit', compact('users'))->with('properties', $properties);
     }
 
     /**
