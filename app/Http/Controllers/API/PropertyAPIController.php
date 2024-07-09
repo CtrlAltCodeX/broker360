@@ -1018,4 +1018,53 @@ class PropertyAPIController extends AppBaseController
 
         return $this->sendResponse('Invitation Sent and Received', $collaborations);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/collaborations/stop",
+     *     summary="Stop a collaboration",
+     *     description="Stops a collaboration between a user and an agent",
+     *     tags={"Collaborations"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"user_id", "agent_id"},
+     *             @OA\Property(property="user_id", type="integer", example=1),
+     *             @OA\Property(property="agent_id", type="integer", example=2)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Collaboration stopped successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Collaboration Stop")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Internal server error")
+     *         )
+     *     )
+     * )
+     */
+    public function stopCollaboration()
+    {
+        $collaborationList = Collaboration::where('user_id', request()->user_id)
+            ->where('agent_id', request()->agent_id)
+            ->delete();
+
+        return $this->sendResponse('Collaboration Stop');
+    }
 }
