@@ -11,7 +11,8 @@ class Mail extends Model
     public $fillable = [
         'to',
         'subject',
-        'message'
+        'message',
+        'file'
     ];
 
     protected $casts = [

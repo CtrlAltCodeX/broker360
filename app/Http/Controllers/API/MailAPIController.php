@@ -146,7 +146,9 @@ class MailAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        FacadesMail::to($input['to'])->send(new CustomMail($input));
+        FacadesMail::to($input['to'])->send(new CustomMail($input, $input['file']));
+
+        $input['file'] = request()->file->getClientOriginalName();
 
         $mail = $this->mailRepository->create($input);
 
@@ -191,7 +193,7 @@ class MailAPIController extends AppBaseController
 
     /**
      * @OA\Delete(
-     *     path="/mails/{id}",
+     *     path="/api/mails/{id}",
      *     summary="Remove the specified Mail from storage",
      *     tags={"Mail"},
      *     @OA\Parameter(

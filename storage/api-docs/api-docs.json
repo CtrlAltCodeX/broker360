@@ -642,13 +642,13 @@
                 }
             }
         },
-        "/mails/{id}": {
+        "/api/mails/{id}": {
             "delete": {
                 "tags": [
                     "Mail"
                 ],
                 "summary": "Remove the specified Mail from storage",
-                "operationId": "88eb2f610c7290bd845fca28a98fa52e",
+                "operationId": "3b43b0abdd3164d133c2e4632d24decb",
                 "parameters": [
                     {
                         "name": "id",
@@ -2015,6 +2015,68 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/invitation-counts": {
+            "get": {
+                "tags": [
+                    "Collaborations"
+                ],
+                "summary": "Get the count of invitations sent and received",
+                "operationId": "a4c3a7aea74444a84aeb66ddf4322a06",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "agent_id",
+                        "in": "query",
+                        "description": "ID of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invitation Sent"
+                                        },
+                                        "data": {
+                                            "description": "Array with the count of collaborations sent and received",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer",
+                                                "example": 5
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
             }
         },
         "/api/property-boards": {

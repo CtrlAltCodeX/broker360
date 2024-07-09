@@ -953,4 +953,69 @@ class PropertyAPIController extends AppBaseController
 
         return $this->sendResponse('All Agents', $collaborationList);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/invitation-counts",
+     *     summary="Get the count of invitations sent and received",
+     *     tags={"Collaborations"},
+     *     @OA\Parameter(
+     *         name="user_id",
+     *         in="query",
+     *         description="ID of the user",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="agent_id",
+     *         in="query",
+     *         description="ID of the agent",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Invitation Sent"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="integer",
+     *                     example=5
+     *                 ),
+     *                 description="Array with the count of collaborations sent and received"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     )
+     * )
+     */
+    public function invitationCounts(Request $request)
+    {
+        $collaborationsSent = Collaboration::where('user_id', $request->user_id)->count();
+        $collaborationsReceived = Collaboration::where('agent_id', $request->agent_id)->count();
+
+        $collaborations = [$collaborationsSent, $collaborationsReceived];
+
+        return $this->sendResponse('Invitation Sent and Received', $collaborations);
+    }
 }

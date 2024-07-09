@@ -3,9 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -14,13 +12,16 @@ class CustomMail extends Mailable
     use Queueable, SerializesModels;
 
     public $message = "";
+    protected $attachment;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(protected $data)
+    public function __construct(protected $data, $attachment = null)
     {
-        $this->message = ( string ) $this->data['message'];
+        $this->message = (string) $this->data['message'];
+
+        $this->attachment = $attachment;
     }
 
     /**
@@ -38,6 +39,13 @@ class CustomMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.custom')->with('data', $this->message);
+        $email = $this->view('emails.custom')
+            ->with('data', $this->message);
+
+        if ($this->attachment) {
+            $email->attach($this->attachment);
+        }
+
+        return $email;
     }
 }
