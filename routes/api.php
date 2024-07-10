@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
         ->except(['create', 'edit']);
 
     Route::post('collaborations/invite', [PropertyAPIController::class, 'inviteCollaboration']);
+
+    Route::post('collaborations/stop', [PropertyAPIController::class, 'stopCollaboration']);
     
     Route::get('collaborations', [PropertyAPIController::class, 'getCollaboration']);
 
