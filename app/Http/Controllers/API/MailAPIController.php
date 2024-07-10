@@ -142,13 +142,16 @@ class MailAPIController extends AppBaseController
      *     )
      * )
      */
-    public function store(CreateMailAPIRequest $request): JsonResponse
+    public function store(CreateMailAPIRequest $request)
     {
         $input = $request->all();
-
-        FacadesMail::to($input['to'])->send(new CustomMail($input, $input['file']));
-
-        $input['file'] = request()->file->getClientOriginalName();
+        
+        if (isset($input['file'])) {
+            FacadesMail::to($input['to'])->send(new CustomMail($input, $input['file']));
+            $input['file'] = request()->file->getClientOriginalName();
+        } else {
+            FacadesMail::to($input['to'])->send(new CustomMail($input));
+        }
 
         $mail = $this->mailRepository->create($input);
 
