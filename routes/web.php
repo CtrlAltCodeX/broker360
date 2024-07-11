@@ -25,6 +25,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
     Route::prefix('users')->group(function () {
         Route::get('list', [UserController::class, 'index'])
             ->name('admin.users.index');
+
+        Route::get('all-users', [UserController::class, 'all'])
+            ->name('admin.all.users');
     
         Route::get('create', [UserController::class, 'create'])
             ->name('admin.users.create');

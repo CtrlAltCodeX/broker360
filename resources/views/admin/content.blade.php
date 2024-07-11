@@ -70,5 +70,55 @@
             </div> <!--end::Row--> <!--begin::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
+    <canvas id="userChart" width="100" height="50"></canvas>
 </main> <!--end::App Main--> <!--begin::Footer-->
 @endsection
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '{{ route("admin.all.users") }}',
+            method: 'GET',
+            success: function(data) {
+                // Extract dates and count occurrences
+                var dateCounts = {};
+                data.data.forEach(function(user) {
+                    var date = new Date(user.created_at).toLocaleDateString();
+                    if (dateCounts[date]) {
+                        dateCounts[date]++;
+                    } else {
+                        dateCounts[date] = 1;
+                    }
+                });
+
+                // Prepare labels and data points
+                var labels = Object.keys(dateCounts);
+                var dataPoints = Object.values(dateCounts);
+
+                var ctx = document.getElementById('userChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'bar', // or 'line', 'pie', etc.
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Number of Users Created',
+                            data: dataPoints,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+@endpush

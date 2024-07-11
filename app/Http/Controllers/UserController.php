@@ -157,4 +157,14 @@ class UserController extends AppBaseController
 
         return redirect(route('admin.users.index'));
     }
+
+    /**
+     * Display a listing of the User.
+     */
+    public function all(Request $request)
+    {
+        $users = $this->userRepository->simplePaginate(10);
+
+        return $users;
+    }
 }
