@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('collaborations/invite', [PropertyAPIController::class, 'inviteCollaboration']);
 
     Route::post('collaborations/stop', [PropertyAPIController::class, 'stopCollaboration']);
-    
+
     Route::get('collaborations', [PropertyAPIController::class, 'getCollaboration']);
 
     Route::get('invitation-counts', [PropertyAPIController::class, 'invitationCounts']);
@@ -68,6 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('mails', App\Http\Controllers\API\MailAPIController::class)
         ->except(['create', 'edit']);
+
+    Route::put('update/template', [UserAPIController::class, 'updateTemplate']);
 });
 
 Route::post('login', [UserAPIController::class, 'login']);
@@ -77,3 +79,7 @@ Route::post('register', [UserAPIController::class, 'store']);
 Route::post('forget-password', [UserAPIController::class, 'forgetPassword']);
 
 Route::post('reset-password', [UserAPIController::class, 'resetPassword']);
+
+Route::get('property/user/{id}', [PropertyAPIController::class, 'getPropertyByUserId']);
+
+Route::get('users/{id}', [UserAPIController::class, 'show']);

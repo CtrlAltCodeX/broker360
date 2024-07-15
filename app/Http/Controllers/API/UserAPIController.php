@@ -690,4 +690,48 @@ class UserAPIController extends AppBaseController
 
         return $this->sendResponse('Current User', auth()->user());
     }
+
+    /**
+     * @OA\Put(
+     *     path="/api/update/template",
+     *     summary="Update user template",
+     *     description="Updates the template ID for the authenticated user",
+     *     operationId="updateTemplate",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="template_id",
+     *         in="query",
+     *         required=true,
+     *         description="Template ID to be updated",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Template Updated",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Template Updated"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
+     */
+    public function updateTemplate()
+    {
+        $user = $this->userRepository->update(['template' => request()->template_id], auth()->user()->id);
+
+        return $this->sendResponse('Template Updated', auth()->user());
+    }
 }
