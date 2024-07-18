@@ -743,9 +743,25 @@ class PropertyAPIController extends AppBaseController
      */
     public function getPropertyByUserId($id)
     {
-        $property = $this->propertyRepository->with('images')->findWhere(['user_id' =>  $id]);
+        $propertyUser = $this->propertyRepository->with('images')->findWhere(['user_id' =>  $id]);
 
-        return $this->sendResponse('All Property', $property);
+        $collaborations = Collaboration::where('user_id', 6)
+            ->get();
+
+        $collaborationProperties = [];
+
+        foreach ($collaborations as $collab) {
+            $propertiesData = $this->propertyRepository
+                ->findByField("user_id", $collab->agent_id);
+
+            foreach ($propertiesData as $property) {
+                $collaborationProperties[] = $property->toArray();
+            }
+        }
+
+        $allProperties = array_merge($collaborationProperties, $propertyUser->toArray());
+
+        return $this->sendResponse('All Property', $allProperties);
     }
 
     /**
