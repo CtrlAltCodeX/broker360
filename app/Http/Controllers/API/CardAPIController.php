@@ -68,7 +68,7 @@ class CardAPIController extends AppBaseController
     public function index(Request $request): JsonResponse
     {
         $cards = $this->cardRepository->all(
-            $request->except(['skip', 'limit']),
+            ['*'],
             $request->get('skip'),
             $request->get('limit')
         );

@@ -43,7 +43,10 @@ class CustomMail extends Mailable
             ->with('data', $this->message);
 
         if ($this->attachment) {
-            $email->attach($this->attachment);
+            $email->attach($this->attachment->getPathname(), [
+                'as' => $this->attachment->getClientOriginalName(),
+                'mime' => $this->attachment->getMimeType(),
+            ]);
         }
 
         return $email;

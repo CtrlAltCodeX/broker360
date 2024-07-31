@@ -3455,6 +3455,51 @@
                     }
                 }
             }
+        },
+        "/api/update/template": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user template",
+                "description": "Updates the template ID for the authenticated user",
+                "operationId": "updateTemplate",
+                "parameters": [
+                    {
+                        "name": "template_id",
+                        "in": "query",
+                        "description": "Template ID to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Template Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Template Updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
         }
     },
     "components": {
