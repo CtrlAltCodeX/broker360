@@ -10,26 +10,18 @@ class Plan extends Model
 
     public $fillable = [
         'name',
-        'users',
-        'website',
-        'payment_method',
+        'desc',
         'price'
-    ];
-
-    protected $casts = [
-        'name' => 'string',
-        'users' => 'integer',
-        'payment_method' => 'string',
-        'price' => 'integer'
     ];
 
     public static array $rules = [
         'name' => 'required',
-        'users' => 'required',
-        'website' => 'required',
-        'payment_method' => 'required',
-        'price' => 'requried'
+        'desc' => 'required',
+        'price' => 'required',
     ];
 
-    
+    public function permission()
+    {
+        return $this->hasMany(Permission::class);
+    }
 }

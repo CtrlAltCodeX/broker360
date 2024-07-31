@@ -16,12 +16,9 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
-            $table->integer('users');
-            $table->tinyInteger('website');
-            $table->string('payment_method');
+            $table->string('desc');
             $table->integer('price');
-            $table->timestamp('created_at');
-            // $table->timestamp('updated_at');
+            $table->timestamps();
         });
     }
 

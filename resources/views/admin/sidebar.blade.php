@@ -37,6 +37,13 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item"> <a href="{{ route('admin.plans.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Plan
+                        </p>
+                    </a>
+                </li>
         </nav>
     </div> <!--end::Sidebar Wrapper-->
 </aside> <!--end::Sidebar--> <!--begin::App Main-->

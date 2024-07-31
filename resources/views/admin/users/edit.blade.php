@@ -14,7 +14,8 @@
                         <input type="email" class="form-control" id="exampleInputPassword1" value="{{ $user->email }}" name="email">
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" value="{{ $user->password }}" name="password">
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                        <span>Leave Blank if do not want to change</span>
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Number</label>
                         <input type="number" class="form-control" id="exampleInputPassword1" value="{{ $user->number }}" name="number">
@@ -36,6 +37,29 @@
                             <option value=1 {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
                             <option value=0 {{ $user->role == 0 ? 'selected' : '' }}>Member</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="user_id" class="form-label">Plans</label>
+                        <select class="form-control" id="plan_id" name="plan_id">
+                            <option value="">--Select--</option>
+                            @foreach($plans as $plan)
+                            <option value="{{ $plan->id }}" {{ $user->permissions?->plan_id == $plan->id ? 'selected' : '' }}>{{ $plan->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="website" name="permissions[website]" {{ old('website', $user->permissions?->website) ?  'checked' : '' }}>
+                        <label for="website" class="form-check-label">Website</label>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="publish_properties" name="permissions[publish_property]" {{ old('publish_property', $user->permissions?->publish_property) ? 'checked' : '' }}>
+                        <label for="publish_properties" class="form-check-label">Publish Properties</label>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="information" name="permissions[real_estate]" {{ old('real_estate', $user->permissions?->real_estate) ? 'checked' : '' }}>
+                        <label for="information" class="form-check-label">Information</label>
                     </div>
                 </div> <!--end::Body--> <!--begin::Footer-->
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->

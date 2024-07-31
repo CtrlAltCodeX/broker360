@@ -2,16 +2,18 @@
 
 namespace App\Repositories;
 
+use App\Models\Permission;
 use App\Models\Plan;
-use App\Repositories\BaseRepository;
 use Prettus\Repository\Eloquent\BaseRepository as EloquentBaseRepository;
 
-class PlanRepository extends EloquentBaseRepository
+class PermissionRepository extends EloquentBaseRepository
 {
     protected $fieldSearchable = [
-        'name',
-        'desc',
-        'price'
+        'real_estate',
+        'publish_property',
+        'website',
+        'user_id',
+        'plan_id',
     ];
 
     public function getFieldsSearchable(): array
@@ -21,6 +23,6 @@ class PlanRepository extends EloquentBaseRepository
 
     public function model(): string
     {
-        return Plan::class;
+        return Permission::class;
     }
 }

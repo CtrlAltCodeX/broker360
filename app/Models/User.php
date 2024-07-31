@@ -38,5 +38,8 @@ class User extends Authenticatable
         'number' => 'required',
     ];
 
-    
+    public function permissions()
+    {
+        return $this->hasOne(Permission::class);
+    }
 }

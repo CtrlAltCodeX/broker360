@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\PermissionRepository;
+use App\Repositories\PlanRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -14,11 +16,11 @@ use Laracasts\Flash\Flash as FlashFlash;
 class UserController extends AppBaseController
 {
     /** @var UserRepository $userRepository*/
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepo)
-    {
-        $this->userRepository = $userRepo;
+    public function __construct(
+        public UserRepository $userRepository,
+        public PermissionRepository $permissionRepository,
+        public PlanRepository $planRepository
+    ) {
     }
 
     /**
@@ -37,7 +39,9 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.users.create');
+        $plans = $this->planRepository->all();
+
+        return view('admin.users.create', compact('plans'));
     }
 
     /**
@@ -60,6 +64,12 @@ class UserController extends AppBaseController
         }
 
         $user = $this->userRepository->create($input);
+
+        $permissions = request()->permissions;
+        $permissions['user_id'] = $user->id;
+        $permissions['plan_id'] = request()->plan_id;
+
+        $this->permissionRepository->create($permissions);
 
         FlashFlash::success('User saved successfully.');
 
@@ -87,7 +97,9 @@ class UserController extends AppBaseController
      */
     public function edit($id)
     {
-        $user = $this->userRepository->find($id);
+        $user = $this->userRepository->with('permissions')->find($id);
+
+        $plans = $this->planRepository->all();
 
         if (empty($user)) {
             FlashFlash::error('User not found');
@@ -95,7 +107,7 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('admin.users.edit')->with('user', $user);
+        return view('admin.users.edit', compact('plans', 'user'));
     }
 
     /**
@@ -130,6 +142,28 @@ class UserController extends AppBaseController
         }
 
         $user = $this->userRepository->update($input, $id);
+
+        $getPermissions = $this->permissionRepository
+            ->findByField('user_id', $id)
+            ->first();
+
+        if (!($getPermissions)) {
+            $permissions['website'] = request()->permissions['website'] ?? 0;
+            $permissions['real_estate'] = request()->permissions['real_estate'] ?? 0;
+            $permissions['publish_property'] = request()->permissions['publish_property'] ?? 0;
+            $permissions['user_id'] = $user->id;
+            $permissions['plan_id'] = request()->plan_id;
+
+            $this->permissionRepository->create($permissions);
+        } else {
+            $permissions['website'] = request()->permissions['website'] ?? 0;
+            $permissions['real_estate'] = request()->permissions['real_estate'] ?? 0;
+            $permissions['publish_property'] = request()->permissions['publish_property'] ?? 0;
+            $permissions['user_id'] = $user->id;
+            $permissions['plan_id'] = request()->plan_id;
+            
+            $this->permissionRepository->update($permissions, $getPermissions->id);
+        }
 
         FlashFlash::success('User updated successfully.');
 
