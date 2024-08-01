@@ -81,7 +81,7 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
-        $user = $this->userRepository->find($id);
+        $user = $this->userRepository->with('plan')->find($id);
 
         if (empty($user)) {
             FlashFlash::error('User not found');
@@ -89,7 +89,7 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.show')->with('user', $user);
+        return view('admin.users.view')->with('user', $user);
     }
 
     /**
@@ -161,7 +161,7 @@ class UserController extends AppBaseController
             $permissions['publish_property'] = request()->permissions['publish_property'] ?? 0;
             $permissions['user_id'] = $user->id;
             $permissions['plan_id'] = request()->plan_id;
-            
+
             $this->permissionRepository->update($permissions, $getPermissions->id);
         }
 

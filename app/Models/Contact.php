@@ -21,7 +21,8 @@ class Contact extends Model
         'skype',
         'website',
         'address',
-        'description'
+        'description',
+        'user_id',
     ];
 
     protected $casts = [
@@ -44,8 +45,12 @@ class Contact extends Model
         'name' => 'required',
         'number' => 'required',
         'email' => 'required',
-        'twitter' => 'required'
+        'twitter' => 'required',
+        'user_id' => 'required'
     ];
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

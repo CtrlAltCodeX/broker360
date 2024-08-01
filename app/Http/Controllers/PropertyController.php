@@ -50,6 +50,8 @@ class PropertyController extends AppBaseController
         $input = $request->all();
 
         if ($input['show_price_ad'] == 'on') $input['show_price_ad'] = 1;
+
+        $input['property_features'] = implode(',', request()->property_features);
         
         $this->propertyRepository->create($input);
 
@@ -63,15 +65,15 @@ class PropertyController extends AppBaseController
      */
     public function show($id)
     {
-        $coontact = $this->propertyRepository->find($id);
+        $property = $this->propertyRepository->with('user')->find($id);
 
-        if (empty($coontact)) {
+        if (empty($property)) {
             FlashFlash::error('Properties not found');
 
             return redirect(route('properties.index'));
         }
 
-        return view('properties.show')->with('coontact', $coontact);
+        return view('admin.properties.view')->with('property', $property);
     }
 
     /**

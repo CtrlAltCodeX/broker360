@@ -46,6 +46,14 @@
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Description</label>
                         <input type="text" class="form-control" id="exampleInputPassword1" name="description">
                     </div>
+                    <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">User</label>
+                        <select class="form-control" name="user_id">
+                            <option value="">--Select--</option>
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                 </div> <!--end::Body--> <!--begin::Footer-->
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->

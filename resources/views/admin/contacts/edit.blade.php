@@ -5,7 +5,7 @@
     <div class="row justify-content-center my-3">
         <div class="col-md-6">
             <form action="{{ route('admin.contacts.update', $contact->id) }}" method="post"> <!--begin::Body-->
-            @csrf
+                @csrf
                 <div class="card-body">
                     <div class="mb-3"> <label for="exampleInputEmail1" class="form-label">Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" name="name" value="{{ $contact->name }}">
@@ -45,6 +45,14 @@
                     </div>
                     <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">Description</label>
                         <input type="text" class="form-control" id="exampleInputPassword1" name="description" value="{{ $contact->description }}">
+                    </div>
+                    <div class="mb-3"> <label for="exampleInputPassword1" class="form-label">User</label>
+                        <select class="form-control" name="user_id">
+                            <option value="">--Select--</option>
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $contact->user_id == $user->id ? 'selected' : ''  }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                 </div> <!--end::Body--> <!--begin::Footer-->

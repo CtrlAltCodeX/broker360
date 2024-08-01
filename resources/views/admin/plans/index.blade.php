@@ -12,6 +12,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Desc</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                     <tr>
                         <td>{{ $plan->name }}</td>
                         <td>{{ $plan->price }}</td>
+                        <td>{{ $plan->desc }}</td>
                         <td class="d-flex" style="grid-gap: 10px;">
                             <a class="btn btn-success ml-2" href="{{ route('admin.plans.edit', $plan->id) }}">Edit</a>
                             <a class="btn btn-success" href="{{ route('admin.plans.delete',$plan->id) }}">Delete</a>

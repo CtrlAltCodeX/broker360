@@ -9,6 +9,11 @@
                 <div class="card-body">
                     <div class="mb-3"> <label for="exampleInputEmail1" class="form-label">Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" value="{{ $boards->name }}" name="name">
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                     <div>
                         <label>Users</label>
@@ -18,6 +23,11 @@
                             <option value="{{$user->id}}" {{ $boards->user_id == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                             @endforeach
                         </select>
+                        @error('user_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div> <!--end::Body--> <!--begin::Footer-->
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->

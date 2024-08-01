@@ -36,10 +36,13 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::post('create', [UserController::class, 'store'])
             ->name('admin.users.store');
 
+        Route::get('show/{id}', [UserController::class, 'show'])
+            ->name('admin.users.show');
+
         Route::get('edit/{id}', [UserController::class, 'edit'])
             ->name('admin.users.edit');
 
-        Route::post('update/{id}', [UserController::class, 'update'])
+        Route::put('update/{id}', [UserController::class, 'update'])
             ->name('admin.users.update');
 
         Route::get('delete/{id}', [UserController::class, 'destroy'])
@@ -56,6 +59,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::post('create', [ContactsController::class, 'store'])
             ->name('admin.contacts.store');
 
+        Route::get('show/{id}', [ContactsController::class, 'show'])
+            ->name('admin.contacts.show');
+
         Route::get('edit/{id}', [ContactsController::class, 'edit'])
             ->name('admin.contacts.edit');
 
@@ -70,6 +76,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::get('list', [PropertyController::class, 'index'])
             ->name('admin.properties.index');
 
+        Route::get('show/{id}', [PropertyController::class, 'show'])
+            ->name('admin.properties.show');
+
         Route::get('create', [PropertyController::class, 'create'])
             ->name('admin.properties.create');
 
@@ -79,7 +88,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::get('edit/{id}', [PropertyController::class, 'edit'])
             ->name('admin.properties.edit');
 
-        Route::post('update/{id}', [PropertyController::class, 'update'])
+        Route::put('update/{id}', [PropertyController::class, 'update'])
             ->name('admin.properties.update');
 
         Route::get('delete/{id}', [PropertyController::class, 'destroy'])

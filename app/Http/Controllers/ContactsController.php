@@ -6,6 +6,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\ContactRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
@@ -14,11 +15,11 @@ use Laracasts\Flash\Flash as FlashFlash;
 class ContactsController extends AppBaseController
 {
     /** @var ContactRepository $contactsRepository*/
-    private $contactsRepository;
 
-    public function __construct(ContactRepository $contactsRepo)
-    {
-        $this->contactsRepository = $contactsRepo;
+    public function __construct(
+        public ContactRepository $contactsRepository,
+        public UserRepository $userRepository
+    ) {
     }
 
     /**
@@ -37,15 +38,17 @@ class ContactsController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.contacts.create');
+        $users = $this->userRepository->all();
+
+        return view('admin.contacts.create', compact('users'));
     }
 
     /**
      * Store a newly created User in storage.
      */
-    public function store(CreateUserRequest $request)
+    public function store()
     {
-        $input = $request->all();
+        $input = request()->all();
 
         $this->contactsRepository->create($input);
 
@@ -59,15 +62,15 @@ class ContactsController extends AppBaseController
      */
     public function show($id)
     {
-        $coontact = $this->contactsRepository->find($id);
+        $contact = $this->contactsRepository->with('user')->find($id);
 
-        if (empty($coontact)) {
+        if (empty($contact)) {
             FlashFlash::error('Contact not found');
 
             return redirect(route('contacts.index'));
         }
 
-        return view('contacts.show')->with('coontact', $coontact);
+        return view('admin.contacts.view')->with('contact', $contact);
     }
 
     /**
@@ -77,19 +80,21 @@ class ContactsController extends AppBaseController
     {
         $contact = $this->contactsRepository->find($id);
 
+        $users = $this->userRepository->all();
+
         if (empty($contact)) {
             FlashFlash::error('Contact not found');
 
             return redirect(route('admin.contacts.index'));
         }
 
-        return view('admin.contacts.edit')->with('contact', $contact);
+        return view('admin.contacts.edit')->with('contact', $contact)->with('users', $users);
     }
 
     /**
      * Update the specified User in storage.
      */
-    public function update($id, UpdateUserRequest $request)
+    public function update($id)
     {
         $user = $this->contactsRepository->find($id);
 
@@ -99,7 +104,7 @@ class ContactsController extends AppBaseController
             return redirect(route('admin.contacts.index'));
         }
 
-        $user = $this->contactsRepository->update($request->all(), $id);
+        $user = $this->contactsRepository->update(request()->all(), $id);
 
         FlashFlash::success('Contact updated successfully.');
 

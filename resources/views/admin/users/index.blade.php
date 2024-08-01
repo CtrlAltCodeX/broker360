@@ -11,11 +11,8 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>email </th>
+                        <th>Email </th>
                         <th>Number</th>
-                        <th>Agency Name</th>
-                        <th>Profile</th>
-                        <th>Lang</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -25,10 +22,8 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->number }}</td>
-                            <td>{{ $user->agency_name }}</td>
-                            <td><img src="{{$user->profile_url}}" width="100"/></td>
-                            <td>{{ $user->lang }}</td>
                             <td class="d-flex" style="grid-gap: 10px;">
+                                <a class="btn btn-success ml-2"  href="{{ route('admin.users.show', $user->id) }}">View</a>
                                 <a class="btn btn-success ml-2"  href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
                                 <a class="btn btn-success"  href="{{ route('admin.users.delete',$user->id) }}">Delete</a>
                             </td>
