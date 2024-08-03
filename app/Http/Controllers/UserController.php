@@ -28,7 +28,7 @@ class UserController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $users = $this->userRepository->paginate(10);
+        $users = $this->userRepository->simplePaginate(10);
 
         return view('admin.users.index')
             ->with('users', $users);
@@ -81,7 +81,7 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
-        $user = $this->userRepository->with('plan')->find($id);
+        $user = $this->userRepository->with('permissions.plan')->find($id);
 
         if (empty($user)) {
             FlashFlash::error('User not found');

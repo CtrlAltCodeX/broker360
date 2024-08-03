@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePropertyAPIRequest;
+use App\Repositories\PropertyImageRepository;
 use App\Repositories\PropertyRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Laracasts\Flash\Flash as FlashFlash;
 
 class PropertyController extends AppBaseController
 {
     /** @var PropertyRepository $propertyRepository*/
-    private $propertyRepository;
 
     public function __construct(
-        PropertyRepository $propertyRepository,
+        public PropertyRepository $propertyRepository,
+        public PropertyImageRepository $propertyImageRepository,
         public UserRepository $userRepository
     ) {
-        $this->propertyRepository = $propertyRepository;
     }
 
     /**
@@ -52,8 +53,23 @@ class PropertyController extends AppBaseController
         if ($input['show_price_ad'] == 'on') $input['show_price_ad'] = 1;
 
         $input['property_features'] = implode(',', request()->property_features);
-        
-        $this->propertyRepository->create($input);
+
+        $property = $this->propertyRepository->create($input);
+
+        foreach (request()->property_image as $image) {
+            if ($file = $image) {
+                if ($file instanceof UploadedFile) {
+                    $profileImage = time() . "." . $file->getClientOriginalExtension();
+
+                    $file->move('storage/property_image/', $profileImage);
+
+                    $input['url'] = "/storage/property_image/" . "$profileImage";
+                }
+            }
+
+            $input['property_id'] = $property->id;
+            $data[] = $this->propertyImageRepository->create($input);
+        }
 
         FlashFlash::success('Properties saved successfully.');
 
@@ -110,6 +126,8 @@ class PropertyController extends AppBaseController
 
             return redirect(route('admin.properties.index'));
         }
+
+        $input['property_features'] = implode(",", request()->property_features??[]);
 
         $user = $this->propertyRepository->update($input, $id);
 

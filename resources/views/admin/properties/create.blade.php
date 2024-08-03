@@ -39,7 +39,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputOperationType" class="form-label required">Operation Type</label>
-                        <input type="text" class="form-control" id="exampleInputOperationType" name="operation_type">
+                        <select class="form-control">
+                            <option value="">--Select--</option>
+                            <option value="Sale">Sale</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Temporary Rent">Temporary Rent</option>
+                        </select>
+                        <!-- <input type="text" class="form-control" id="exampleInputOperationType" name="operation_type"> -->
                         @error('operation_type')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -151,7 +157,9 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputShareCommission" class="form-label">Share Commission</label>
-                        <input type="number" class="form-control" id="exampleInputShareCommission" name="share_commission">
+                        <input type="radio" name="share_commission" value="1" /><span style="margin-left: 10px;">Yes</span><br>
+                        <input type="radio" name="share_commission" value="0" /><span style="margin-left: 10px;">No</span>
+                        <!-- <input type="number" class="form-control" id="exampleInputShareCommission" name="share_commission"> -->
                         @error('share_commission')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -220,6 +228,14 @@
                             <option value="Salón de usos múltiples">Salón de usos múltiples</option>
                         </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputConditionSharing" class="form-label">Images</label>
+                        <input type="file" multiple class="form-control" name="property_image[]">
+                        @error('condition_sharing')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>                   
 
                     <div class="mb-3">
                         <label>Users</label>

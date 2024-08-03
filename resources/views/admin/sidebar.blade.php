@@ -12,8 +12,7 @@
                 </li>
                 <li class="nav-item"> <a href="{{ route('admin.users.index') }}" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                         <p>
-                            Users
-
+                            Perfiles de Usuario
                         </p>
                     </a>
                 </li>
@@ -32,8 +31,7 @@
 
                 <li class="nav-item"> <a href="{{ route('admin.properties.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
-                            Properties
-
+                            Propiedades
                         </p>
                     </a>
                 </li>
@@ -41,6 +39,12 @@
                 <li class="nav-item"> <a href="{{ route('admin.plans.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
                             Plan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item"> <a href="{{ route('admin.features.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Property features
                         </p>
                     </a>
                 </li>

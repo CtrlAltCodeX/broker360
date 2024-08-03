@@ -31,8 +31,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><b>Profile</b></label>
-                        @if($user->profile)
-                        <p><img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Picture" width="100"></p>
+                        @if($user->profile_url)
+                        <p><img src="{{$user->profile_url}}" alt="Profile Picture" width="100"></p>
                         @else
                         <p>No profile picture uploaded.</p>
                         @endif
@@ -43,18 +43,18 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><b>Plan</b></label>
-                        <p>{{ $user->plan->name }}</p>
+                        <p>{{ $user->permissions->plan->name??'N/A' }}</p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><b>Permissions</b></label>
                         <ul>
-                            @if($user->permissions['website'])
+                            @if($user->permissions['website']??"")
                             <li>Website</li>
                             @endif
-                            @if($user->permissions['publish_property'])
+                            @if($user->permissions['publish_property']??"")
                             <li>Publish Properties</li>
                             @endif
-                            @if($user->permissions['real_estate'])
+                            @if($user->permissions['real_estate']??"")
                             <li>Real Estate</li>
                             @endif
                         </ul>

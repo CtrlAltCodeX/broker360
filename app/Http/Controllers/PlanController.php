@@ -25,51 +25,7 @@ class PlanController extends AppBaseController
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/plans",
-     *     summary="Display a listing of the Plans",
-     *     tags={"Plans"},
-     *     @OA\Parameter(
-     *         name="skip",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Plans retrieved successfully",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Plan")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad Request"
-     *     )
-     * )
-     * 
-     * @OA\Schema(
-     *     schema="Plan",
-     *     type="object",
-     *     title="Plan",
-     *     properties={
-     *         @OA\Property(property="id", type="integer", readOnly=true),
-     *         @OA\Property(property="name", type="string"),
-     *         @OA\Property(property="users", type="integer"),
-     *         @OA\Property(property="website", type="string"),
-     *         @OA\Property(property="payment_method", type="string"),
-     *         @OA\Property(property="price", type="number", format="float"),
-     *         @OA\Property(property="created_at", type="string", format="date-time", readOnly=true),
-     *         @OA\Property(property="updated_at", type="string", format="date-time", readOnly=true)
-     *     }
-     * )
+     * Index Function 
      */
     public function index(Request $request)
     {
@@ -89,49 +45,6 @@ class PlanController extends AppBaseController
         return view('admin.plans.create', compact('users'));
     }
 
-    /**
-     * @OA\Post(
-     *      path="/api/plans",
-     *      operationId="storePlan",
-     *      tags={"Plans"},
-     *      summary="Store new plan",
-     *      description="Store new plan",
-     *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\JsonContent(
-     *              required={"name", "desc", "price"},
-     *              @OA\Property(property="name", type="string", example="Basic Plan"),
-     *              @OA\Property(property="desc", type="string", example="This is a basic plan"),
-     *              @OA\Property(property="price", type="number", format="float", example=99.99)
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="success", type="boolean", example=true),
-     *              @OA\Property(property="data", type="object", ref="#/components/schemas/Plan"),
-     *              @OA\Property(property="message", type="string", example="Plan saved successfully")
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request"
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated"
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Resource Not Found"
-     *      )
-     * )
-     */
     public function store()
     {
         $input = request()->all();

@@ -269,7 +269,7 @@ class UserAPIController extends AppBaseController
     public function show($id): JsonResponse
     {
         /** @var User $user */
-        $user = $this->userRepository->find($id);
+        $user = $this->userRepository->with('permissions.plan')->find($id);
 
         if (empty($user)) {
             return $this->sendError('User not found');
@@ -468,10 +468,8 @@ class UserAPIController extends AppBaseController
         if (!Auth::attempt($request->only(['email', 'password'])))
             return $this->sendError('Unauthorized');
 
-        $user = Auth::user();
-
-        $success['token'] = $user->createToken('test')->plainTextToken;
-        $success['user'] = $user;
+        $success['token'] = auth()->user()->createToken('test')->plainTextToken;
+        $success['user'] = $this->userRepository->with('permissions.plan')->find(auth()->user()->id);
 
         return $this->sendResponse('User Login Successfully', $success);
     }
@@ -688,7 +686,9 @@ class UserAPIController extends AppBaseController
     {
         if (!auth()->check()) return $this->sendError('Please Login!!');
 
-        return $this->sendResponse('Current User', auth()->user());
+        $user = $this->userRepository->with('permissions.plan')->find(auth()->user()->id);
+
+        return $this->sendResponse('Current User', $user);
     }
 
     /**

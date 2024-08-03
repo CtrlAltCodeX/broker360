@@ -13,7 +13,7 @@
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $plans->name) }}">
                     </div>
                     <div class="mb-3">
-                        <label for="desc" class="form-label">Desc</label>
+                        <label for="desc" class="form-label">Desc ( Type features Comma Seprated )</label>
                         <textarea class="form-control" id="desc" name="desc">{{ old('desc', $plans->desc) }}</textarea>
                     </div>
                     <div class="mb-3">

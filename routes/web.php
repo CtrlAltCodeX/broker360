@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PropertyBoardsController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\PropertyFeaturesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -133,6 +134,26 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
         Route::get('delete/{id}', [PlanController::class, 'destroy'])
             ->name('admin.plans.delete');
+    });
+
+    Route::prefix('features')->group(function () {
+        Route::get('index', [PropertyFeaturesController::class, 'index'])
+            ->name('admin.features.index');
+
+        Route::get('create', [PropertyFeaturesController::class, 'create'])
+            ->name('admin.features.create');
+
+        Route::post('create', [PropertyFeaturesController::class, 'store'])
+            ->name('admin.features.store');
+
+        Route::get('edit/{id}', [PropertyFeaturesController::class, 'edit'])
+            ->name('admin.features.edit');
+
+        Route::post('update/{id}', [PropertyFeaturesController::class, 'update'])
+            ->name('admin.features.update');
+
+        Route::get('delete/{id}', [PropertyFeaturesController::class, 'destroy'])
+            ->name('admin.features.delete');
     });
 });
 

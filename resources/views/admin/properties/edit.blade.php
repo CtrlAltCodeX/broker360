@@ -43,7 +43,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputOperationType" class="form-label required">Operation Type</label>
-                        <input type="text" class="form-control" required id="exampleInputOperationType" name="operation_type" value="{{ old('operation_type', $properties->operation_type) }}">
+                        <select class="form-control" name="operation_type">
+                            <option value="">--Select--</option>
+                            <option value="Venta" {{ $properties->operation_type == 'Venta' ? 'selected' : '' }}>Sale</option>
+                            <option value="Renta" {{ $properties->operation_type == 'Renta' ? 'selected' : '' }}>Rent</option>
+                            <option value="Renta temporal" {{ $properties->operation_type == 'Renta temporal' ? 'selected' : '' }}>Temporary Rent</option>
+                        </select>
+                        <!-- <input type="text" class="form-control" required id="exampleInputOperationType" name="operation_type" value="{{ old('operation_type', $properties->operation_type) }}"> -->
                         @error('operation_type')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -64,28 +70,28 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputBedroom" class="form-label">Bedroom</label>
-                        <input type="number" class="form-control" id="exampleInputBedroom" name="bedroom" value="{{ old('bedroom', $properties->bedroom) }}">
+                        <input type="text" class="form-control" id="exampleInputBedroom" name="bedroom" value="{{ old('bedroom', $properties->bedroom) }}">
                         @error('bedroom')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputBathrooms" class="form-label">Bathrooms</label>
-                        <input type="number" class="form-control" id="exampleInputBathrooms" name="bathrooms" value="{{ old('bathrooms', $properties->bathrooms) }}">
+                        <input type="text" class="form-control" id="exampleInputBathrooms" name="bathrooms" value="{{ old('bathrooms', $properties->bathrooms) }}">
                         @error('bathrooms')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputHalfBath" class="form-label">Half Bath</label>
-                        <input type="number" class="form-control" id="exampleInputHalfBath" name="half_bath" value="{{ old('half_bath', $properties->half_bath) }}">
+                        <input type="text" class="form-control" id="exampleInputHalfBath" name="half_bath" value="{{ old('half_bath', $properties->half_bath) }}">
                         @error('half_bath')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputParkingLots" class="form-label">Parking Lots</label>
-                        <input type="number" class="form-control" id="exampleInputParkingLots" name="parking_lots" value="{{ old('parking_lots', $properties->parking_lots) }}">
+                        <input type="text" class="form-control" id="exampleInputParkingLots" name="parking_lots" value="{{ old('parking_lots', $properties->parking_lots) }}">
                         @error('parking_lots')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -120,7 +126,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputMonthlyMaintenance" class="form-label">Monthly Maintenance</label>
-                        <input type="number" class="form-control" id="exampleInputMonthlyMaintenance" name="monthly_maintenance" value="{{ old('monthly_maintenance', $properties->monthly_maintenance) }}">
+                        <input type="text" class="form-control" id="exampleInputMonthlyMaintenance" name="monthly_maintenance" value="{{ old('monthly_maintenance', $properties->monthly_maintenance) }}">
                         @error('monthly_maintenance')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -141,14 +147,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputStreet" class="form-label">Street</label>
-                        <input type="number" class="form-control" id="exampleInputStreet" name="street" value="{{ old('street', $properties->street) }}">
+                        <input type="text" class="form-control" id="exampleInputStreet" name="street" value="{{ old('street', $properties->street) }}">
                         @error('street')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputCornerWith" class="form-label">Corner With</label>
-                        <input type="number" class="form-control" id="exampleInputCornerWith" name="corner_with" value="{{ old('corner_with', $properties->corner_with) }}">
+                        <input type="text" class="form-control" id="exampleInputCornerWith" name="corner_with" value="{{ old('corner_with', $properties->corner_with) }}">
                         @error('corner_with')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -161,8 +167,10 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputShareCommission" class="form-label">Share Commission</label>
-                        <input type="number" class="form-control" id="exampleInputShareCommission" name="share_commission" value="{{ old('share_commission', $properties->share_commission) }}">
+                        <label for="exampleInputShareCommission" class="form-label">Share Commission</label><br>
+                        <input type="radio" name="share_commission" value="1" {{ $properties->share_commission ? 'checked' : '' }}/><span style="margin-left: 10px;">Yes</span><br>
+                        <input type="radio" name="share_commission" value="0" {{ !$properties->share_commission ? 'checked' : '' }} /><span style="margin-left: 10px;">No</span>
+                        <!-- <input type="number" class="form-control" id="exampleInputShareCommission" name="share_commission" value="{{ old('share_commission', $properties->share_commission) }}"> -->
                         @error('share_commission')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror

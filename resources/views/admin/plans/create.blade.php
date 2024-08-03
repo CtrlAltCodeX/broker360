@@ -12,7 +12,7 @@
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="mb-3">
-                        <label for="desc" class="form-label">Desc</label>
+                        <label for="desc" class="form-label">Desc ( Type features Comma Seprated ) </label>
                         <textarea class="form-control" id="desc" name="desc"></textarea>
                     </div>
                     <div class="mb-3">

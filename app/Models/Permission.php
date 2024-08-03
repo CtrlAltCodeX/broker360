@@ -24,4 +24,9 @@ class Permission extends Model
         'user_id' => 'required',
         'plan_id' => 'required'
     ];
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }

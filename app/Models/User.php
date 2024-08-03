@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function plan()
     {
-        return $this->hasOne(Permission::class);
+        return $this->hasOne(Plan::class);
     }
 }
