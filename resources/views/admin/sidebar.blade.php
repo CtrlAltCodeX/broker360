@@ -38,13 +38,25 @@
 
                 <li class="nav-item"> <a href="{{ route('admin.plans.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
-                            Plan
+                            Planes de Suscripción
                         </p>
                     </a>
                 </li>
                 <li class="nav-item"> <a href="{{ route('admin.features.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
-                            Property features
+                            Características de Propiedades
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item"> <a href="{{ route('admin.type.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Tipos de Propiedades
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item"> <a href="{{ route('admin.collaboration') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                        Colaboraciones
                         </p>
                     </a>
                 </li>

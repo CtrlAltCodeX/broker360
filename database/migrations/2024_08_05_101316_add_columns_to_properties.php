@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->string('street')->nullable();
-            $table->string('corner_with')->nullable();
-            $table->integer('postal_code')->nullable();
-            $table->text('property_features')->nullable();
-            $table->tinyInteger('share_commission')->nullable();
-            $table->integer('commission_percent')->nullable();
-            $table->string('condition_sharing')->nullable();
+            $table->unsignedBigInteger('property_type_id')->nullable();
+
+            $table->foreign('property_type_id')
+                ->references('id')
+                ->on('property_types')
+                ->onDelete('cascade'); // Optional: Define the action on delete
         });
     }
 

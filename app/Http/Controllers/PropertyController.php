@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePropertyAPIRequest;
+use App\Models\PropertyType;
 use App\Repositories\PropertyImageRepository;
 use App\Repositories\PropertyRepository;
+use App\Repositories\PropertyTypeRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -18,7 +20,8 @@ class PropertyController extends AppBaseController
     public function __construct(
         public PropertyRepository $propertyRepository,
         public PropertyImageRepository $propertyImageRepository,
-        public UserRepository $userRepository
+        public UserRepository $userRepository,
+        public PropertyTypeRepository $propertyTypeRepository
     ) {
     }
 
@@ -40,7 +43,9 @@ class PropertyController extends AppBaseController
     {
         $users = $this->userRepository->all();
 
-        return view('admin.properties.create', compact('users'));
+        $types = $this->propertyTypeRepository->all();
+
+        return view('admin.properties.create', compact('users', 'types'));
     }
 
     /**
@@ -56,19 +61,21 @@ class PropertyController extends AppBaseController
 
         $property = $this->propertyRepository->create($input);
 
-        foreach (request()->property_image as $image) {
-            if ($file = $image) {
-                if ($file instanceof UploadedFile) {
-                    $profileImage = time() . "." . $file->getClientOriginalExtension();
+        if (isset(request()->property_image)) {
+            foreach (request()->property_image as $image) {
+                if ($file = $image) {
+                    if ($file instanceof UploadedFile) {
+                        $profileImage = time() . "." . $file->getClientOriginalExtension();
 
-                    $file->move('storage/property_image/', $profileImage);
+                        $file->move('storage/property_image/', $profileImage);
 
-                    $input['url'] = "/storage/property_image/" . "$profileImage";
+                        $input['url'] = "/storage/property_image/" . "$profileImage";
+                    }
                 }
-            }
 
-            $input['property_id'] = $property->id;
-            $data[] = $this->propertyImageRepository->create($input);
+                $input['property_id'] = $property->id;
+                $data[] = $this->propertyImageRepository->create($input);
+            }
         }
 
         FlashFlash::success('Properties saved successfully.');
@@ -99,6 +106,8 @@ class PropertyController extends AppBaseController
     {
         $properties = $this->propertyRepository->find($id);
 
+        $types = $this->propertyTypeRepository->all();
+
         $users = $this->userRepository->all();
 
         if (empty($properties)) {
@@ -107,7 +116,7 @@ class PropertyController extends AppBaseController
             return redirect(route('admin.properties.index'));
         }
 
-        return view('admin.properties.edit', compact('users'))->with('properties', $properties);
+        return view('admin.properties.edit', compact('users', 'types'))->with('properties', $properties);
     }
 
     /**
@@ -127,7 +136,7 @@ class PropertyController extends AppBaseController
             return redirect(route('admin.properties.index'));
         }
 
-        $input['property_features'] = implode(",", request()->property_features??[]);
+        $input['property_features'] = implode(",", request()->property_features ?? []);
 
         $user = $this->propertyRepository->update($input, $id);
 

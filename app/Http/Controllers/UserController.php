@@ -201,4 +201,9 @@ class UserController extends AppBaseController
 
         return $users;
     }
+
+    public function collaboration()
+    {
+        return view('admin.users.collaboration');
+    }
 }

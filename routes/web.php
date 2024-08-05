@@ -6,6 +6,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PropertyBoardsController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyFeaturesController;
+use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -155,6 +156,29 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::get('delete/{id}', [PropertyFeaturesController::class, 'destroy'])
             ->name('admin.features.delete');
     });
+
+    Route::prefix('type')->group(function () {
+        Route::get('index', [PropertyTypeController::class, 'index'])
+            ->name('admin.type.index');
+
+        Route::get('create', [PropertyTypeController::class, 'create'])
+            ->name('admin.type.create');
+
+        Route::post('create', [PropertyTypeController::class, 'store'])
+            ->name('admin.type.store');
+
+        Route::get('edit/{id}', [PropertyTypeController::class, 'edit'])
+            ->name('admin.type.edit');
+
+        Route::post('update/{id}', [PropertyTypeController::class, 'update'])
+            ->name('admin.type.update');
+
+        Route::get('delete/{id}', [PropertyTypeController::class, 'destroy'])
+            ->name('admin.type.delete');
+    });
+
+    Route::get('collaboration', [UserController::class, 'collaboration'])
+        ->name('admin.collaboration');
 });
 
 

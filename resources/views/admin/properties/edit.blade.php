@@ -19,6 +19,18 @@
                     </div>
                     @endif
 
+                    <div class="mb-3">
+                        <label for="exampleInputOperationType" class="form-label required">Property Type</label>
+                        <select class="form-control" name="property_type_id">
+                            <option value="">--Select--</option>
+                            @foreach($types as $type)
+                            <option value="{{ $type->id }}" {{ $properties->property_type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('property_type_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <!-- New Fields -->
                     <div class="mb-3">
                         <label for="exampleInputType" class="form-label required">Type</label>
@@ -168,7 +180,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputShareCommission" class="form-label">Share Commission</label><br>
-                        <input type="radio" name="share_commission" value="1" {{ $properties->share_commission ? 'checked' : '' }}/><span style="margin-left: 10px;">Yes</span><br>
+                        <input type="radio" name="share_commission" value="1" {{ $properties->share_commission ? 'checked' : '' }} /><span style="margin-left: 10px;">Yes</span><br>
                         <input type="radio" name="share_commission" value="0" {{ !$properties->share_commission ? 'checked' : '' }} /><span style="margin-left: 10px;">No</span>
                         <!-- <input type="number" class="form-control" id="exampleInputShareCommission" name="share_commission" value="{{ old('share_commission', $properties->share_commission) }}"> -->
                         @error('share_commission')
@@ -239,7 +251,7 @@
                             <option value="Salón de usos múltiples">Salón de usos múltiples</option>
                         </select>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label>Users</label>
                         <select class="form-control required" name="user_id" required>

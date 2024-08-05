@@ -36,6 +36,7 @@ class Property extends Model
         'longitude_latitude',
         'status',
         'user_id',
+        'property_type_id'
     ];
 
     protected $casts = [
@@ -50,7 +51,8 @@ class Property extends Model
         'parking_lots' => 'string',
         'construction' => 'string',
         'year_construction' => 'string',
-        'number_plants' => 'integer'
+        'number_plants' => 'integer',
+        'property_type_id' => 'integer',
     ];
 
     public static array $rules = [
