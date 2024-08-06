@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Collaboration;
+use App\Repositories\CollaborationRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\PlanRepository;
 use App\Repositories\UserRepository;
@@ -19,7 +21,8 @@ class UserController extends AppBaseController
     public function __construct(
         public UserRepository $userRepository,
         public PermissionRepository $permissionRepository,
-        public PlanRepository $planRepository
+        public PlanRepository $planRepository,
+        public CollaborationRepository $collaborationRepository
     ) {
     }
 
@@ -202,8 +205,58 @@ class UserController extends AppBaseController
         return $users;
     }
 
-    public function collaboration()
+    public function collaborationCreate()
     {
-        return view('admin.users.collaboration');
+        $users = $this->userRepository->all();
+
+        return view('admin.collaboration.create', compact('users'));
+    }
+
+    public function collaborationIndex()
+    {
+        $collaborations = $this->collaborationRepository
+            ->with('user')
+            ->with('agent')
+            ->paginate(10);
+
+        return view('admin.collaboration.index', compact('collaborations'));
+    }
+
+    public function inviteCollaboration()
+    {
+        Collaboration::create([
+            'user_id' => request()->user_id,
+            'agent_id' => request()->agent_id
+        ]);
+
+        return redirect()->route('admin.collaboration.index');
+    }
+
+    public function collaborationEdit($id)
+    {
+        $users = $this->userRepository->all();
+
+        $collaboration = $this->collaborationRepository->find($id);
+
+        return view('admin.collaboration.edit', compact('users', 'collaboration'));
+    }
+
+    public function collaborationUpdate($id)
+    {
+        $this->collaborationRepository->update([
+            'user_id' => request()->user_id,
+            'agent_id' => request()->agent_id,
+        ], $id);
+
+        return redirect()->route('admin.collaboration.index');
+    }
+
+    public function collaborationDelete($id)
+    {
+        $collaboration = $this->collaborationRepository->find($id);
+
+        $collaboration->delete();
+
+        return redirect()->route('admin.collaboration.index');
     }
 }

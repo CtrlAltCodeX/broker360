@@ -13,4 +13,14 @@ class Collaboration extends Model
         'user_id',
         'agent_id',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(User::class, 'id', 'agent_id');
+    }
 }

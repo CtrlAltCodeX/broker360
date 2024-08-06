@@ -177,8 +177,25 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             ->name('admin.type.delete');
     });
 
-    Route::get('collaboration', [UserController::class, 'collaboration'])
-        ->name('admin.collaboration');
+    Route::prefix('collaboration')->group(function () {
+        Route::get('create', [UserController::class, 'collaborationCreate'])
+            ->name('admin.collaboration.create');
+
+        Route::get('', [UserController::class, 'collaborationIndex'])
+            ->name('admin.collaboration.index');
+
+        Route::post('collaboration', [UserController::class, 'inviteCollaboration'])
+            ->name('admin.collaboration.store');
+
+        Route::get('edit/{id}', [UserController::class, 'collaborationEdit'])
+            ->name('admin.collaboration.edit');
+
+        Route::post('update/{id}', [UserController::class, 'collaborationUpdate'])
+            ->name('admin.collaboration.update');
+
+        Route::get('delete/{id}', [UserController::class, 'collaborationDelete'])
+            ->name('admin.collaboration.delete');
+    });
 });
 
 
