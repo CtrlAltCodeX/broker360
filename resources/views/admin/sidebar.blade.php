@@ -56,7 +56,13 @@
                 </li>
                 <li class="nav-item"> <a href="{{ route('admin.collaboration.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
-                        Colaboraciones
+                            Colaboraciones
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item"> <a href="{{ route('admin.website.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Sitio Web
                         </p>
                     </a>
                 </li>

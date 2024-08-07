@@ -12,6 +12,7 @@ class Collaboration extends Model
     public $fillable = [
         'user_id',
         'agent_id',
+        'status',
     ];
 
     public function user()

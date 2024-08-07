@@ -8,6 +8,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyFeaturesController;
 use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -175,6 +176,17 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
         Route::get('delete/{id}', [PropertyTypeController::class, 'destroy'])
             ->name('admin.type.delete');
+    });
+
+    Route::prefix('website')->group(function () {
+        Route::get('index', [WebsiteController::class, 'index'])
+            ->name('admin.website.index');
+
+        Route::get('edit/{id}', [WebsiteController::class, 'edit'])
+            ->name('admin.website.edit');
+
+        Route::post('update/{id}', [WebsiteController::class, 'update'])
+            ->name('admin.website.update');
     });
 
     Route::prefix('collaboration')->group(function () {
