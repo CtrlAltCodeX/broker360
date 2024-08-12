@@ -15,6 +15,22 @@
                         </span>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Category</label>
+                        <select class="form-control" name="category">
+                            <option value="">--Select--</option>
+                            <option {{ $propertyFeatures->category == 'Amenidades' ? 'selected' : '' }} value="Amenidades">Amenidades</option>
+                            <option {{ $propertyFeatures->category == 'Exterior' ? 'selected' : '' }} value="Exterior">Exterior</option>
+                            <option {{ $propertyFeatures->category == 'General' ? 'selected' : '' }} value="General">General</option>
+                            <option {{ $propertyFeatures->category == 'Políticas' ? 'selected' : '' }} value="Políticas">Políticas</option>
+                            <option {{ $propertyFeatures->category == 'Recreación' ? 'selected' : '' }} value="Recreación">Recreación</option>
+                        </select>
+                        @error('category')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div> <!--end::Body--> <!--begin::Footer-->
                 <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->
             </form> <!--end::Form-->

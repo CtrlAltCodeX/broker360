@@ -20,7 +20,7 @@
                 <tbody>
                     @foreach($properties as $property)
                     <tr>
-                        <td>{{ $property->type }}</td>
+                        <td>{{ $property->types->name }}</td>
                         <td>{{ $property->ad_type }}</td>
                         <td>{{ $property->ad_desc }}</td>
                         <td>{{ $property->operation_type }}</td>

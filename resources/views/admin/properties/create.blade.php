@@ -31,13 +31,13 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="exampleInputType" class="form-label required">Type</label>
                             <input type="text" class="form-control" id="exampleInputType" name="type" value="{{ old('type') }}">
                             @error('type')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="exampleInputAdType" class="form-label required">Ad Type</label>
                             <input type="text" class="form-control" id="exampleInputAdType" name="ad_type" value="{{ old('ad_type') }}">
@@ -194,52 +194,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Amenities</label>
+                            <label>Features</label>
                             <select class="form-control" multiple name="property_features[]">
                                 <option value="">--Select--</option>
-                                <option value="Muelle de carga">Muelle de carga</option>
-                                <option value="Acceso a la playa">Acceso a la playa</option>
-                                <option value="Andén">Andén</option>
-                                <option value="Balcón">Balcón</option>
-                                <option value="Cisterna">Cisterna</option>
-                                <option value="Frente a la playa">Frente a la playa</option>
-                                <option value="Garaje">Garaje</option>
-                                <option value="Jardín">Jardín</option>
-                                <option value="Parrilla">Parrilla</option>
-                                <option value="Patio">Patio</option>
-                                <option value="Riego por aspersión">Riego por aspersión</option>
-                                <option value="Roof of garden">Roof of garden</option>
-                                <option value="Terraza">Terraza</option>
-                                <option value="Vista al mar">Vista al mar</option>
-                                <option value="Accesibilidad para personas con discapacidad">Accesibilidad para personas con discapacidad</option>
-                                <option value="Aire acondicionado">Aire acondicionado</option>
-                                <option value="Alarma">Alarma</option>
-                                <option value="Amueblado">Amueblado</option>
-                                <option value="Bodega">Bodega</option>
-                                <option value="Calefacción">Calefacción</option>
-                                <option value="Chimenea">Chimenea</option>
-                                <option value="Circuito cerrado">Circuito cerrado</option>
-                                <option value="Cocina integral">Cocina integral</option>
-                                <option value="Conmutador">Conmutador</option>
-                                <option value="Cuarto de servicio">Cuarto de servicio</option>
-                                <option value="Elevador">Elevador</option>
-                                <option value="Fraccionamiento privado">Fraccionamiento </option>
-                                <option value="Hidroneumático">Hidroneumático</option>
-                                <option value="Mascotas permitidas">Mascotas permitidas</option>
-                                <option value="Panel solar">Panel solar</option>
-                                <option value="Penthouse">Penthouse</option>
-                                <option value="Generador eléctrico">Generador eléctrico</option>
-                                <option value="Portero">Portero</option>
-                                <option value="Recámaras en planta baja">Recámaras en planta baja</option>
-                                <option value="Seguridad">Seguridad</option>
-                                <option value="Alberca">Alberca</option>
-                                <option value="Área de juegos infantiles">Área de juegos infantiles</option>
-                                <option value="Cancha de padel">Cancha de padel</option>
-                                <option value="Cancha de tenis">Cancha de tenis</option>
-                                <option value="Fogatero">Fogatero</option>
-                                <option value="Gimnasio">Gimnasio</option>
-                                <option value="Jacuzzi">Jacuzzi</option>
-                                <option value="Salón de usos múltiples">Salón de usos múltiples</option>
+                                @foreach($features as $feature)
+                                <option value="{{$feature->name}}">{{$feature->name}}</option>
+                                @endforeach
                             </select>
                         </div>
 

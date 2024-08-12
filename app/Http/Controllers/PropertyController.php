@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePropertyAPIRequest;
-use App\Models\PropertyType;
+use App\Repositories\PropertyFeatureRepository;
 use App\Repositories\PropertyImageRepository;
 use App\Repositories\PropertyRepository;
 use App\Repositories\PropertyTypeRepository;
@@ -21,16 +21,18 @@ class PropertyController extends AppBaseController
         public PropertyRepository $propertyRepository,
         public PropertyImageRepository $propertyImageRepository,
         public UserRepository $userRepository,
-        public PropertyTypeRepository $propertyTypeRepository
-    ) {
-    }
+        public PropertyTypeRepository $propertyTypeRepository,
+        public PropertyFeatureRepository $propertyFeatureRepository
+    ) {}
 
     /**
      * Display a listing of the User.
      */
     public function index(Request $request)
     {
-        $properties = $this->propertyRepository->paginate(10);
+        $properties = $this->propertyRepository
+            ->with('types')
+            ->paginate(10);
 
         return view('admin.properties.index')
             ->with('properties', $properties);
@@ -45,7 +47,9 @@ class PropertyController extends AppBaseController
 
         $types = $this->propertyTypeRepository->all();
 
-        return view('admin.properties.create', compact('users', 'types'));
+        $features = $this->propertyFeatureRepository->all();
+
+        return view('admin.properties.create', compact('users', 'types', 'features'));
     }
 
     /**

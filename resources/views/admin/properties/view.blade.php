@@ -15,7 +15,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h3>{{ ucwords($property->type) }} - {{ ucwords($property->ad_type) }}</h3>
+                    <h3>{{ ucwords($property->types->name) }} - {{ ucwords($property->ad_type) }}</h3>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b>Ad Description</b></h5><br>

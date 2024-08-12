@@ -27,11 +27,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('properties', App\Http\Controllers\API\PropertyAPIController::class)
         ->except(['create', 'edit']);
 
-    Route::post('collaborations/invite', [PropertyAPIController::class, 'inviteCollaboration']);
+    Route::group(['prefix' => 'collaborations'], function () {
+        Route::post('invite', [PropertyAPIController::class, 'inviteCollaboration']);
 
-    Route::post('collaborations/stop', [PropertyAPIController::class, 'stopCollaboration']);
+        Route::post('stop', [PropertyAPIController::class, 'stopCollaboration']);
 
-    Route::get('collaborations', [PropertyAPIController::class, 'getCollaboration']);
+        Route::get('', [PropertyAPIController::class, 'getCollaboration']);
+    });
 
     Route::get('invitation-counts', [PropertyAPIController::class, 'invitationCounts']);
 
@@ -43,6 +45,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{id}/images', [PropertyAPIController::class, 'getImages']);
 
         Route::get('{id}/user', [PropertyAPIController::class, 'getPropertyByUserId']);
+
+        Route::get('type/all', [PropertyAPIController::class, 'getPropertyTypes']);
+
+        Route::get('features/all', [PropertyAPIController::class, 'getPropertyFeatures']);
     });
 
     Route::resource('property-boards', App\Http\Controllers\API\PropertyBoardsAPIController::class)

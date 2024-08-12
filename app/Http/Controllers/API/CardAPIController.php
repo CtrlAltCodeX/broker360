@@ -73,7 +73,7 @@ class CardAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($cards->toArray(), 'Cards retrieved successfully');
+        return $this->sendResponse('Cards retrieved successfully', $cards->toArray());
     }
 
     /**
@@ -106,9 +106,17 @@ class CardAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $card = $this->cardRepository->create($input);
+        $cards = $this->cardRepository->count();
 
-        return $this->sendResponse($card->toArray(), 'Card saved successfully');
+        if (!$cards) {
+            $card = $this->cardRepository->create($input);
+        } else {
+            $card = $this->cardRepository->first();
+
+            $card->update(request()->all());
+        }
+
+        return $this->sendResponse('Card saved successfully', $card->toArray());
     }
 
     /**
@@ -164,6 +172,6 @@ class CardAPIController extends AppBaseController
 
         $card->delete();
 
-        return $this->sendSuccess('Card deleted successfully');
+        return $this->sendResponse('Card deleted successfully');
     }
 }

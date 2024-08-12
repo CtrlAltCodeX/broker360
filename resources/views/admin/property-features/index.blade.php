@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -18,6 +19,7 @@
                     @foreach($features as $feature)
                         <tr>
                             <td>{{ $feature->name }}</td>
+                            <td>{{ $feature->category }}</td>
                             <td class="d-flex" style="grid-gap: 10px;">
                                 <a class="btn btn-success ml-2"  href="{{ route('admin.features.edit', $feature->id) }}">Edit</a>
                                 <a class="btn btn-success"  href="{{ route('admin.features.delete',$feature->id) }}">Delete</a>

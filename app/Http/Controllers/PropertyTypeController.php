@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PropertyFeature;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
 
@@ -49,9 +48,9 @@ class PropertyTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $propertyTypes = PropertyType::find($id);
+        $propertytype = PropertyType::find($id);
 
-        return view('admin.property-type.edit', compact('propertyTypes'));
+        return view('admin.property-type.edit', compact('propertytype'));
     }
 
     /**

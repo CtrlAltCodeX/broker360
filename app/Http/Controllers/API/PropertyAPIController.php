@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Collaboration;
+use App\Models\PropertyFeature;
+use App\Models\PropertyType;
 use App\Repositories\PropertyImageRepository;
 use Illuminate\Http\UploadedFile;
 
@@ -1077,10 +1079,118 @@ class PropertyAPIController extends AppBaseController
      */
     public function stopCollaboration()
     {
-        $collaborationList = Collaboration::where('user_id', request()->user_id)
+        Collaboration::where('user_id', request()->user_id)
             ->where('agent_id', request()->agent_id)
             ->delete();
 
         return $this->sendResponse('Collaboration Stop');
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/properties/type/all",
+     *     operationId="getPropertyTypes",
+     *     tags={"Properties"},
+     *     summary="Get list of all property types",
+     *     description="Returns a list of all property types",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PropertyType")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
+     * @OA\Schema(
+     *     schema="PropertyType",
+     *     type="object",
+     *     title="Property Type",
+     *     description="Property Type Model",
+     *     @OA\Property(
+     *         property="id",
+     *         type="integer",
+     *         description="ID of the property type"
+     *     ),
+     *     @OA\Property(
+     *         property="name",
+     *         type="string",
+     *         description="Name of the property type"
+     *     ),
+     * )
+     */
+    public function getPropertyTypes()
+    {
+        $allTypes = PropertyType::all();
+
+        return $this->sendResponse('Property Types', $allTypes);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/properties/features/all",
+     *     summary="Get all property features",
+     *     tags={"Properties"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of all property features",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PropertyFeature")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
+     * @OA\Schema(
+     *     schema="PropertyFeature",
+     *     type="object",
+     *     title="Property Feature",
+     *     description="Schema for a Property Feature",
+     *     @OA\Property(
+     *         property="id",
+     *         type="integer",
+     *         description="The ID of the property feature"
+     *     ),
+     *     @OA\Property(
+     *         property="name",
+     *         type="string",
+     *         description="The name of the property feature"
+     *     ),
+     *     @OA\Property(
+     *         property="description",
+     *         type="string",
+     *         description="The description of the property feature"
+     *     ),
+     *     @OA\Property(
+     *         property="created_at",
+     *         type="string",
+     *         format="date-time",
+     *         description="The creation timestamp of the property feature"
+     *     ),
+     *     @OA\Property(
+     *         property="updated_at",
+     *         type="string",
+     *         format="date-time",
+     *         description="The update timestamp of the property feature"
+     *     )
+     * )
+
+     */
+    public function getPropertyFeatures()
+    {
+        $allFeatures = PropertyFeature::all();
+
+        return $this->sendResponse('Property Features', $allFeatures);
     }
 }

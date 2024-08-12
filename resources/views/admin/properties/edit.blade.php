@@ -32,13 +32,13 @@
                         @enderror
                     </div>
                     <!-- New Fields -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="exampleInputType" class="form-label required">Type</label>
                         <input type="text" class="form-control" id="exampleInputType" name="type" value="{{ old('type', $properties->type) }}">
                         @error('type')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="exampleInputAdType" class="form-label required">Ad Type</label>
                         <input type="text" class="form-control" id="exampleInputAdType" name="ad_type" value="{{ old('ad_type', $properties->ad_type) }}">

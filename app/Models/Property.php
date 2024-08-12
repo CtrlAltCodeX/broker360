@@ -9,7 +9,7 @@ class Property extends Model
     public $table = 'properties';
 
     public $fillable = [
-        'type',
+        // 'type',
         'ad_type',
         'ad_desc',
         'operation_type',
@@ -40,7 +40,7 @@ class Property extends Model
     ];
 
     protected $casts = [
-        'type' => 'string',
+        // 'type' => 'string',
         'ad_type' => 'string',
         'ad_desc' => 'string',
         'operation_type' => 'string',
@@ -56,7 +56,7 @@ class Property extends Model
     ];
 
     public static array $rules = [
-        'type' => 'required',
+        // 'type' => 'required',
         'ad_type' => 'required',
         'ad_desc' => 'required',
         'operation_type' => 'required',
@@ -65,6 +65,7 @@ class Property extends Model
         'number_plants' => 'required',
         'price' => 'required',
         'user_id' => 'required',
+        'property_type_id' => 'required'
     ];
 
     public function images()
@@ -75,5 +76,10 @@ class Property extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function types()
+    {
+        return $this->belongsTo(PropertyType::class, 'property_type_id', 'id');
     }
 }

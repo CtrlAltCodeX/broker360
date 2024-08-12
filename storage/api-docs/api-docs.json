@@ -2118,6 +2118,64 @@
                 }
             }
         },
+        "/api/properties/type/all": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get list of all property types",
+                "description": "Returns a list of all property types",
+                "operationId": "getPropertyTypes",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PropertyType"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/properties/features/all": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get all property features",
+                "operationId": "0dc00a9c9cfa5ef0124b081ebc139197",
+                "responses": {
+                    "200": {
+                        "description": "List of all property features",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PropertyFeature"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/api/property-boards": {
             "get": {
                 "tags": [
@@ -3763,6 +3821,50 @@
                     "agent_id": {
                         "description": "The ID of the agent",
                         "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "PropertyType": {
+                "title": "Property Type",
+                "description": "Property Type Model",
+                "properties": {
+                    "id": {
+                        "description": "ID of the property type",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the property type",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PropertyFeature": {
+                "title": "Property Feature",
+                "description": "Schema for a Property Feature",
+                "properties": {
+                    "id": {
+                        "description": "The ID of the property feature",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The name of the property feature",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "The description of the property feature",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The creation timestamp of the property feature",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The update timestamp of the property feature",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
