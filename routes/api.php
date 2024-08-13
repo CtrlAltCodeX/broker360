@@ -76,6 +76,9 @@ Route::middleware('auth:sanctum')->group(function () {
         ->except(['create', 'edit']);
 
     Route::put('update/template', [UserAPIController::class, 'updateTemplate']);
+
+    Route::resource('helps', App\Http\Controllers\API\HelpAPIController::class)
+        ->except(['create', 'edit']);
 });
 
 Route::post('login', [UserAPIController::class, 'login']);

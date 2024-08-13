@@ -1189,8 +1189,18 @@ class PropertyAPIController extends AppBaseController
      */
     public function getPropertyFeatures()
     {
-        $allFeatures = PropertyFeature::all();
+        $allFeatures = PropertyFeature::select('category')
+            ->groupBy('category')
+            ->get()
+            ->toArray();
 
-        return $this->sendResponse('Property Features', $allFeatures);
+        $data = [];
+        foreach ($allFeatures as $allFeature) {
+            $data[$allFeature['category']] = PropertyFeature::where('category', $allFeature['category'])
+                ->get()
+                ->toArray();
+        }
+
+        return $this->sendResponse('Property Features', $data);
     }
 }

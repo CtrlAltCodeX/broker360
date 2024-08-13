@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HelpController;
+use App\Http\Controllers\HelpTutorialController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PropertyBoardsController;
 use App\Http\Controllers\PropertyController;
@@ -24,7 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth', 'web']], function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
     Route::prefix('users')->group(function () {
         Route::get('list', [UserController::class, 'index'])
@@ -208,6 +211,10 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         Route::get('delete/{id}', [UserController::class, 'collaborationDelete'])
             ->name('admin.collaboration.delete');
     });
+
+    Route::resource("help", HelpController::class);
+
+    Route::resource("help_tutorial", HelpTutorialController::class);
 });
 
 

@@ -60,12 +60,24 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item"> <a href="{{ route('admin.website.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                <li class="nav-item"> <a href="{{ route('help.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Sección de Ayuda
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item"> <a href="{{ route('help_tutorial.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            Sección Tutoriales
+                        </p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item"> <a href="{{ route('admin.website.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
                             Sitio Web
                         </p>
                     </a>
-                </li>
+                </li> -->
         </nav>
     </div> <!--end::Sidebar Wrapper-->
 </aside> <!--end::Sidebar--> <!--begin::App Main-->
