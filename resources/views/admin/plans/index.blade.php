@@ -24,7 +24,9 @@
                         <td>{{ $plan->desc }}</td>
                         <td class="d-flex" style="grid-gap: 10px;">
                             <a class="btn btn-success ml-2" href="{{ route('admin.plans.edit', $plan->id) }}">Edit</a>
+                            @if($plan->id != 1)
                             <a class="btn btn-success" href="{{ route('admin.plans.delete',$plan->id) }}">Delete</a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

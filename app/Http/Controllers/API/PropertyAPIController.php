@@ -9,11 +9,14 @@ use App\Repositories\PropertyRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Mail\CustomMail;
 use App\Models\Collaboration;
 use App\Models\PropertyFeature;
 use App\Models\PropertyType;
+use App\Models\User;
 use App\Repositories\PropertyImageRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class PropertyAPIController
@@ -745,16 +748,18 @@ class PropertyAPIController extends AppBaseController
      */
     public function getPropertyByUserId($id)
     {
-        $propertyUser = $this->propertyRepository->with('images')->findWhere(['user_id' =>  $id]);
+        $propertyUser = $this->propertyRepository->with('images')
+            ->findWhere(['user_id' =>  $id]);
 
-        $collaborations = Collaboration::where('user_id', 6)
+        $collaborations = Collaboration::where('agent_id', auth()->user()->id)
+            ->where('status', 1)
             ->get();
 
         $collaborationProperties = [];
 
         foreach ($collaborations as $collab) {
             $propertiesData = $this->propertyRepository
-                ->findByField("user_id", $collab->agent_id);
+                ->findByField("user_id", $collab->user_id);
 
             foreach ($propertiesData as $property) {
                 $collaborationProperties[] = $property->toArray();
@@ -763,7 +768,7 @@ class PropertyAPIController extends AppBaseController
 
         $allProperties = array_merge($collaborationProperties, $propertyUser->toArray());
 
-        return $this->sendResponse('All Property', $allProperties);
+        return $this->sendResponse('User Property', $allProperties);
     }
 
     /**
@@ -897,6 +902,15 @@ class PropertyAPIController extends AppBaseController
             'user_id' => request()->user_id,
             'agent_id' => request()->agent_id
         ]);
+
+        $agent = User::find(request()->agent_id);
+
+        $user = User::find(request()->user_id);
+        $data['subject'] = 'Collaboration';
+        $data['message'] = $user->name . " Invited you to Collaborate";
+        $data['collaboration'] = true;
+
+        Mail::to($agent->email)->send(new CustomMail($data));
 
         return $this->sendResponse('Agent Invited');
     }

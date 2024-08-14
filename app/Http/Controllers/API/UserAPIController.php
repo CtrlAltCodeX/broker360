@@ -14,6 +14,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Collaboration;
+use App\Repositories\PermissionRepository;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -21,12 +22,10 @@ use Illuminate\Http\UploadedFile;
  */
 class UserAPIController extends AppBaseController
 {
-    private UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepo)
-    {
-        $this->userRepository = $userRepo;
-    }
+    public function __construct(
+        public UserRepository $userRepository,
+        public PermissionRepository $permissionRepository,
+    ) {}
 
     /**
      * @OA\Get(
@@ -170,6 +169,14 @@ class UserAPIController extends AppBaseController
         $input['password'] = Hash::make($input['password']);
 
         $user = $this->userRepository->create($input);
+
+        $this->permissionRepository->create([
+            'real_estate' => 'on',
+            'publish_property' => 0,
+            'website' => 0,
+            'user_id' => $user->id,
+            'plan_id' => 1,
+        ]);
 
         return $this->sendResponse('User saved successfully', $user->toArray());
     }

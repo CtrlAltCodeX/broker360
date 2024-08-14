@@ -75,9 +75,9 @@ class HelpTutorialController extends AppBaseController
      * Update the specified Help in storage.
      * PUT/PATCH /helps/{id}
      */
-    public function update($id, UpdateHelpAPIRequest $request)
+    public function update($id)
     {
-        $input = $request->all();
+        $input = request()->all();
 
         /** @var Help $help */
         $help = $this->helpTutorialRepository->find($id);

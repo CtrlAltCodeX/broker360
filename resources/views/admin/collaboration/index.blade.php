@@ -21,6 +21,7 @@
                     <tr>
                         <td>{{ $user->user->name }}</td>
                         <td>{{ $user->agent->name }}</td>
+                        <td>{{ $user->status ? 'Approved' : 'N/A' }}</td>
                         <td class="d-flex" style="grid-gap: 10px;">
                             <a class="btn btn-success ml-2" href="{{ route('admin.collaboration.edit', $user->id) }}">Edit</a>
                             <a class="btn btn-success" href="{{ route('admin.collaboration.delete',$user->id) }}">Delete</a>

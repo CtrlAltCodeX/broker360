@@ -39,8 +39,12 @@ class CustomMail extends Mailable
      */
     public function build()
     {
-        $email = $this->view('emails.custom')
-            ->with('data', $this->message);
+        if (isset($this->data['collaboration'])) {
+            $email = $this->view('emails.collaboration');
+        } else {
+            $email = $this->view('emails.custom')
+                ->with('data', $this->message);
+        }
 
         if ($this->attachment) {
             $email->attach($this->attachment->getPathname(), [

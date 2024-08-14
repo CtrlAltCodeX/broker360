@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center my-3">
         <div class="col-md-6">
-            <form action="{{ route('help.update', $help->id) }}" method="post"> <!--begin::Body-->
+            <form action="{{ route('help_tutorial.update', $help->id) }}" method="post"> <!--begin::Body-->
                 @csrf
                 @method('PUT')
                 <div class="card-body">

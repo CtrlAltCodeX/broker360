@@ -23,8 +23,7 @@ class UserController extends AppBaseController
         public PermissionRepository $permissionRepository,
         public PlanRepository $planRepository,
         public CollaborationRepository $collaborationRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the User.
@@ -226,7 +225,8 @@ class UserController extends AppBaseController
     {
         Collaboration::create([
             'user_id' => request()->user_id,
-            'agent_id' => request()->agent_id
+            'agent_id' => request()->agent_id,
+            'status' => request()->status
         ]);
 
         return redirect()->route('admin.collaboration.index');
@@ -246,6 +246,7 @@ class UserController extends AppBaseController
         $this->collaborationRepository->update([
             'user_id' => request()->user_id,
             'agent_id' => request()->agent_id,
+            'status' => request()->status
         ], $id);
 
         return redirect()->route('admin.collaboration.index');
