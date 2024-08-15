@@ -79,6 +79,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('helps', App\Http\Controllers\API\HelpAPIController::class)
         ->except(['create', 'edit']);
+
+    Route::resource('helps_tutorials', App\Http\Controllers\API\HelpTutorialAPIController::class)
+        ->except(['create', 'edit']);
 });
 
 Route::post('login', [UserAPIController::class, 'login']);

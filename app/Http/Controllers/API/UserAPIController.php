@@ -737,7 +737,7 @@ class UserAPIController extends AppBaseController
      */
     public function updateTemplate()
     {
-        $user = $this->userRepository->update(['template' => request()->template_id], auth()->user()->id);
+        $this->userRepository->update(['template' => request()->template_id], auth()->user()->id);
 
         return $this->sendResponse('Template Updated', auth()->user());
     }

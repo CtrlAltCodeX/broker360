@@ -333,6 +333,22 @@ class PropertyAPIController extends AppBaseController
 
         $property = $this->propertyRepository->create($input);
 
+        if (isset(request()->property_image)) {
+            foreach (request()->property_image as $image) {
+                if ($file = $image) {
+                    if ($file instanceof UploadedFile) {
+                        $profileImage = time() . "." . $file->getClientOriginalExtension();
+    
+                        $file->move('storage/property_image/', $profileImage);
+    
+                        $input['url'] = "/storage/property_image/" . "$profileImage";
+                    }
+                }
+    
+                $this->propertyImageRepo->create($input);
+            }
+        }
+
         return $this->sendResponse('Property saved successfully', $property->toArray());
     }
 

@@ -25,7 +25,8 @@ class User extends Authenticatable
         'timezone',
         'profile_url',
         'role',
-        'template'
+        'template',
+        'status',
     ];
 
     protected $casts = [

@@ -88,6 +88,13 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="website" class="form-check-label">Website</label>
+                        <select class="form-control" name="status">
+                            <option value=0 {{ $user->status == 0 ? 'selected' : '' }}>InActive</option>
+                            <option value=1 {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
+                        </select>
+                    </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="website" name="permissions[website]" {{ old('permissions.website', $user->permissions?->website) ? 'checked' : '' }}>
                         <label for="website" class="form-check-label">Website</label>
