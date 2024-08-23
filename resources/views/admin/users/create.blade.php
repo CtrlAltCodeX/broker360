@@ -80,7 +80,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="website" class="form-check-label">Website</label>
+                        <label for="website" class="form-check-label">Status</label>
                         <select class="form-control" name="status">
                             <option value=0>InActive</option>
                             <option value=1>Active</option>

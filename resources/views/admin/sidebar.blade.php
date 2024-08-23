@@ -72,6 +72,12 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item"> <a href="{{ route('admin.mail.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            mensajes
+                        </p>
+                    </a>
+                </li>
                 <!-- <li class="nav-item"> <a href="{{ route('admin.website.index') }}" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
                             Sitio Web

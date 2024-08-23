@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\HelpTutorialController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PropertyBoardsController;
 use App\Http\Controllers\PropertyController;
@@ -210,6 +211,14 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
         Route::get('delete/{id}', [UserController::class, 'collaborationDelete'])
             ->name('admin.collaboration.delete');
+    });
+
+    Route::prefix('mail')->group(function () {
+        Route::get('', [MailController::class, 'index'])
+            ->name('admin.mail.index');
+
+        Route::get('delete/{id}', [MailController::class, 'destroy'])
+            ->name('admin.mail.delete');
     });
 
     Route::resource("help", HelpController::class);
