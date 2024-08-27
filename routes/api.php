@@ -94,4 +94,4 @@ Route::post('reset-password', [UserAPIController::class, 'resetPassword']);
 
 Route::get('property/user/{id}', [PropertyAPIController::class, 'getPropertyByUserId']);
 
-Route::get('users/{id}', [UserAPIController::class, 'show']);
+Route::get('user/{id}', [UserAPIController::class, 'show']);

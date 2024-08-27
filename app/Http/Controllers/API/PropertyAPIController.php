@@ -767,7 +767,7 @@ class PropertyAPIController extends AppBaseController
         $propertyUser = $this->propertyRepository->with('images')
             ->findWhere(['user_id' =>  $id]);
 
-        $collaborations = Collaboration::where('agent_id', auth()->user()->id)
+        $collaborations = Collaboration::where('agent_id', $id)
             ->where('status', 1)
             ->get();
 
